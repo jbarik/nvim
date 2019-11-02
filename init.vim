@@ -8,6 +8,10 @@
 "  6 fixed pipe bar`
 set guicursor=n-v-c:blinkon100
 set guicursor+=i:ver100-iCursor
+set termguicolors
+
+"Don't jump to newline after column 80
+"set textwidth=0 "autocmd FileType vim set textwidth=0
 
 set mouse=a
 let mapleader=","
@@ -26,18 +30,26 @@ set shiftwidth=3
 set expandtab     " Turn Tab keypresses into spaces. You can still insert
                   " real Tabs as [Ctrl]-V [Tab]
 
-" ================ Swap Files ===============================
+" ================ Swap Files ==================================================
 set noswapfile
 set nobackup
 set nowb
 
-" ================ Search ==================================
+" ================ Search ====================================================
 set hlsearch   " Highlight search
 set ic         " Ignore case
 set incsearch  " Find the next match as we type the search
 set smartcase  " ... Unless we type a capital
 
-" ================ Completion ======================
+" ================ Popup menu =================================================
+" Set the transparency of popup to 15. 0-opaque 100-fully transparent
+set pumblend=15
+" Make the selected item completely opaque. See the colorschem file
+"hi PmenuSel blend=0
+
+" ================ Completion =================================================
+" wildmode list::longest,full expands the suggestions in
+" command line
 set completeopt=menu,menuone,longest,preview
 set wildmenu
 set wildmode=list:longest,full
@@ -74,3 +86,4 @@ Plug 'ycm-core/YouCompleteMe'
 " Initialize plugin system
 call plug#end()
 
+colorscheme adonis
