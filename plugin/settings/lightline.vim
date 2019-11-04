@@ -1,21 +1,24 @@
+set laststatus=2
+set noshowmode
 let g:lightline = {
-      \ 'enable': {'statusline':1,},
-      \ 'colorscheme': 'wombat'}
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \     'left': [ ['mode', 'paste'],
+      \               ['readonly', 'filename', 'modified']
+      \             ],
+      \     'right': [ ['trailing'], ['lineinfo', 'percent'] ]
+      \ },
+      \ 'separator' : { 'left': "▶", 'right': "◀" },
+      \ 'subseparator': { 'left': "»", 'right': "«" }
+      \ }
 
-let g:lightline.active = {
-      \ 'left': [ [ 'mode', 'paste' ],
-      \           [ 'readonly', 'filename', 'modified' ] ],
-      \ 'right': [ [ 'trailing' ],
-      \            [ 'lineinfo' ],
-      \            [ 'percent' ] ] }
-"     \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
+" \ 'colorscheme': 'one',
 
-let g:lightline.inactive = {
-      \ 'left': [ [ 'filename' ] ],
-      \ 'right': [ [ 'percent' ] ] }
-
-let g:lightline.separator = {'left': '▶' , 'right': '◀'}
+" Trailing whitespace status
+"
+" Register the component
 let g:lightline.component_expand = {'trailing': 'lightline#trailing_whitespace#component'}
+" Set color to the component (use warning or error):
 let g:lightline.component_type = {'trailing': 'error'}
 
 " unicode symbols
