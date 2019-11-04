@@ -5,9 +5,11 @@
 "  3 is blinky underscore
 "  4 fixed underscore
 "  5 pipe bar (blinking)
-"  6 fixed pipe bar`
-set guicursor=n-v-c:blinkon100
+"  6 fixed pipe bar
+set guicursor=n-v-c:block-Cursor
 set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon100
+set guicursor+=i:blinkon100
 set termguicolors
 
 "Don't jump to newline after column 80
