@@ -43,11 +43,13 @@ hi DiffChange	guibg=darkmagenta
 hi DiffDelete	gui=bold guifg=Blue guibg=DarkCyan
 hi DiffText	gui=bold guibg=Red
 
-hi Cursor	guifg=black guibg=yellow
-hi lCursor      gui=none   guifg=#404040   guibg=#8fff8b
-hi CursorIM     gui=none   guifg=#404040   guibg=#8b8bff
+hi Cursor	gui=bold   guifg=#0e0f0f  guibg=yellow
+hi lCursor      gui=none   guifg=#404040  guibg=#8fff8b
+hi iCursor      gui=bold   guifg=black    guibg=yellow
+hi CursorIM     gui=bold   guifg=#404040  guibg=#8b8bff
 hi CursonLine   guifg=#DAD3A9 guibg=#333333
-hi CursorLineNr guifg=#7800f0 guibg=#333431
+"hi CursorLineNr guifg=#7800f0 guibg=#333431
+hi CursorLineNr guifg=#f42069 guibg=#333431
 
 
 ""================ Buffer explorer settings star ================
@@ -101,4 +103,3 @@ hi cDelimiter guifg=#00BFFF
 
 " See ~/.vim/after/syntax/cpp/c.vim, cpp.vim
 " Operators are defined there
-

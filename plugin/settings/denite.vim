@@ -16,4 +16,4 @@ function! s:denite_my_settings() abort
 endfunction
 
 
-nmap <Space>b :Denite buffer<CR>
+"nmap <Space>b :Denite buffer<CR>
