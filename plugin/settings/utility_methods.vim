@@ -1,4 +1,3 @@
-
 "set colorcolumn and settings. Keep the width at 85 column and set the colors
 "let &colorcolumn=join(range(85,999),",")
 "Method to toggle colorcolumn

@@ -12,6 +12,19 @@ nmap <Leader>n  :call ToggleRelativeNumber()<CR>
 nmap <Leader>cc :call ToggleColorColumn()<CR>
 nnoremap <silent> <leader>cl :set cuc!<Bar>set cursorline!<CR>
 
+" copy current file relative path
+nmap <Leader>cr :let @*=expand("%")<CR>
+
+" copy current file full path
+nmap <Leader>cf :let @*=expand("%:p")<CR>
+
+" copy current file name
+nmap <Leader>ct :let @*=expand("%:t")<CR>
+
+" copy current file's directory name
+nmap <Leader>cd :let @*=expand("%:p:h")<CR>
+
+
 " Windows navigation
 nmap <Leader>j <C-W>j
 nmap <Leader>k <C-W>k
@@ -59,4 +72,8 @@ nnoremap <Space>ln :let @*='b ' . expand("%:t") . ':' . line(".")<CR>
 
 tnoremap <C-n> <C-\><C-n>
 
+" Find out the highlight group of current word 
+map <F3> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
