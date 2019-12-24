@@ -1,14 +1,16 @@
+filetype plugin indent on
 set termguicolors
 set mouse=a
-" unnamed - PRIMARY (slect to copy middle mouse button press to paste)
-" unnamedplus - CLIPBOARD (Ctrl+c, Ctrl+v)
+" unnamed - PRIMARY(vim calls "*) - slect to copy middle mouse button press to paste
+" unnamedplus - CLIPBOARD(vim cals it "+) - Ctrl+c, Ctrl+v
 set clipboard+=unnamed
+"set clipboard+=unnamedplus
 "Don't jump to newline after column 80
 "set textwidth=0 "autocmd FileType vim set textwidth=0
 
 let mapleader=","
 
-"================= Python Code ==========================================
+"================= Python Code ===============================================
 
 python3 << EOF
 import os, re, vim
@@ -31,23 +33,23 @@ vim.command("let working_dir = '%s'"% working_dir);
 
 EOF
 
-"========================================================================
+"=============================================================================
 
 " To show glyphs
 set encoding=utf8
 
 set nu          " Line numbers should be shown
 set ruler       " Show line number and col number of cursor
-set showbreak=↪ " ↳ Type: insertmode ctrl+v u21B3
+set showbreak=↪ " ↳ Type: insertmode ctrl+v u21B3 ⇶
 
-" ================ Indention ==================================================
+" ================ Indention =================================================
 set cindent shiftwidth=3
 set softtabstop=3 " Make Vim treat <Tab> key as 3 spaces, but respect hard Tabs.
 set shiftwidth=3
 set expandtab     " Turn Tab keypresses into spaces. You can still insert
                   " real Tabs as [Ctrl]-V [Tab]
 
-" ================ Swap Files ==================================================
+" ================ Swap Files ================================================
 set noswapfile
 set nobackup
 set nowb
@@ -58,32 +60,24 @@ set ic         " Ignore case
 set incsearch  " Find the next match as we type the search
 set smartcase  " ... Unless we type a capital
 
-" ================ Popup menu =================================================
+" ================ Popup menu ================================================
 " Set the transparency of popup to 15. 0-opaque 100-fully transparent
 set pumblend=15
 " Make the selected item completely opaque. See the colorschem file
 "hi PmenuSel blend=0
 
-" ================ Completion =================================================
+" ================ Completion ================================================
 " wildmode list::longest,full expands the suggestions in
 " command line
-set completeopt=menu,menuone,longest,preview
+"set completeopt=menu,menuone,longest,preview
+"set completeopt=menu,menuone,longest,previewpopup
+set completeopt=noinsert,menuone,noselect
+
 set wildmenu
 set wildmode=list:longest,full
 
-" ================ Fold ===================================================
+" ================ Fold ======================================================
 set nofoldenable " disable folds
-
-"" filetype plugin indent on
-"" syntax enable
-""
-"" " =========== Enable omni completion ============================================
-"" set omnifunc=syntaxcomplete#Complete
-"" autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-"" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"" autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-"" autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
-"" autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
 
 
 " Specify a directory for plugins
@@ -113,14 +107,35 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'liuchengxu/vista.vim'
 
-Plug 'Shougo/denite.nvim'
+" See https://github.com/ncm2/ncm2
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-vim-lsp'
+Plug 'ncm2/float-preview.nvim'
+
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-bufword'
+Plug 'fgrsnau/ncm2-otherbuf'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Initialize plugin system
 call plug#end()
 
+"let g:loaded_youcompleteme = 1
+
+"" filetype plugin indent on
+"" syntax enable
+""
+"" " =========== Enable omni completion ============================================
+"" set omnifunc=syntaxcomplete#Complete
+"" autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
+"" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"" autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
+"" autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
+"" autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
 
 colorscheme adonis
 set guifont=Monospace\ 12
@@ -144,10 +159,11 @@ set guifont=Monospace\ 12
 "  4 fixed underscore
 "  5 pipe bar (blinking)
 "  6 fixed pipe bar
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon100
-"set guicursor+=i:blinkwait10
+" Foreground color setting for cursor doesn't work see:
+" https://github.com/neovim/neovim/issues/6591
+set guicursor=n-v-c:block-blinkon100-Cursor
+set guicursor+=i:ver100-blinkon100-iCursor
+
 command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 augroup custom_term
@@ -164,25 +180,32 @@ let g:terminal_color_1  = '#ed4c4c'
 " Normal - Green
 let g:terminal_color_2  = '#6bb91f'
 " Normal -Yellow
-let g:terminal_color_3  = '#ffdb41'
+let g:terminal_color_3  = '#ffff66'
 " Normal - Blue
 let g:terminal_color_4  = '#81a7d7'
 " Normal - Purple
-let g:terminal_color_5  = '#a353b0'
+let g:terminal_color_5  = '#b55ef1'
 " Normal - Cyan
 let g:terminal_color_6  = '#0daab3'
 " Normal - White
 let g:terminal_color_7  = '#e0e3dd'
 "
-" Bright - Black
-" Bright - Red
-" Bright - Green
-" Bright - Yellow
-" Bright - Blue
-" Bright - Purple
-" Bright - Cyan
-" Bright - White
-
+" Bright - Black   8
+" Bright - Red     9
+" Bright - Green  10
+" Bright - Yellow 11
+" Bright - Blue   12
+" Bright - Cyan   14
+" Bright - White  15
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+" Bright - Purple 13
+let g:terminal_color_13 = '#f15ee4'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
 "let g:terminal_color_0  = '#2e3436'
 "let g:terminal_color_1  = '#cc0000'
 "let g:terminal_color_2  = '#4e9a06'
@@ -191,11 +214,4 @@ let g:terminal_color_7  = '#e0e3dd'
 "let g:terminal_color_5  = '#75507b'
 "let g:terminal_color_6  = '#0b939b'
 "let g:terminal_color_7  = '#d3d7cf'
-let g:terminal_color_8  = '#555753'
-let g:terminal_color_9  = '#ef2929'
-let g:terminal_color_10 = '#8ae234'
-let g:terminal_color_11 = '#fce94f'
-let g:terminal_color_12 = '#729fcf'
-let g:terminal_color_13 = '#ad7fa8'
-let g:terminal_color_14 = '#00f5e9'
-let g:terminal_color_15 = '#eeeeec'
+"let g:terminal_color_13 = '#ad7fa8'
