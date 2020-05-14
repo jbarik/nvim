@@ -1,9 +1,9 @@
 filetype plugin indent on
 set termguicolors
 set mouse=a
-" unnamed - PRIMARY(vim calls "*) - slect to copy middle mouse button press to paste
+" unnamed - PRIMARY(vim calls "*) - select to copy middle mouse button press to paste
 " unnamedplus - CLIPBOARD(vim cals it "+) - Ctrl+c, Ctrl+v
-set clipboard+=unnamed
+set clipboard=unnamed,unnamedplus
 "set clipboard+=unnamedplus
 "Don't jump to newline after column 80
 "set textwidth=0 "autocmd FileType vim set textwidth=0
@@ -40,7 +40,7 @@ set encoding=utf8
 
 set nu          " Line numbers should be shown
 set ruler       " Show line number and col number of cursor
-set showbreak=↪ " ↳ Type: insertmode ctrl+v u21B3 ⇶
+set showbreak=↪ " ↳ Type: insertmode ctrl+v u21B3 ⇶  ℱ X
 
 " ================ Indention =================================================
 set cindent shiftwidth=3
@@ -79,6 +79,10 @@ set wildmode=list:longest,full
 " ================ Fold ======================================================
 set nofoldenable " disable folds
 
+" ================ Path ======================================================
+"  First val is current working dir :pwd
+"  2nd   val is the dir of the current file
+set path=,,.,/usr/include
 
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
@@ -99,6 +103,7 @@ Plug 'itchyny/lightline.vim'| Plug 'maximbaz/lightline-trailing-whitespace'
 Plug 'w0rp/ale'
 Plug 'm-pilia/vim-ccls'
 Plug 'nfvs/vim-perforce'
+Plug 'danro/rename.vim'
 " This is for code snippets, header guard
 Plug 'mbbill/code_complete'
 Plug 'sheerun/vim-polyglot'
@@ -122,20 +127,19 @@ Plug 'fgrsnau/ncm2-otherbuf'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'vim-scripts/DrawIt'
+
 call plug#end()
+
+"When the <Enter> key is pressed while the popup menu is visible, it only
+"hides the menu. Use this mapping to close the menu and also start a new
+"line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 "let g:loaded_youcompleteme = 1
 
 "" filetype plugin indent on
 "" syntax enable
-""
-"" " =========== Enable omni completion ============================================
-"" set omnifunc=syntaxcomplete#Complete
-"" autocmd FileType css           setlocal omnifunc=csscomplete#CompleteCSS
-"" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"" autocmd FileType javascript    setlocal omnifunc=javascriptcomplete#CompleteJS
-"" autocmd FileType python        setlocal omnifunc=pythoncomplete#Complete
-"" autocmd FileType xml           setlocal omnifunc=xmlcomplete#CompleteTags
 
 colorscheme adonis
 set guifont=Monospace\ 12
@@ -163,8 +167,6 @@ set guifont=Monospace\ 12
 " https://github.com/neovim/neovim/issues/6591
 set guicursor=n-v-c:block-blinkon100-Cursor
 set guicursor+=i:ver100-blinkon100-iCursor
-
-command! -bang -nargs=+ -complete=dir Rag call fzf#vim#ag_raw(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 augroup custom_term
    autocmd!

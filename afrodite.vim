@@ -6,97 +6,94 @@ if exists("syntax_on")
    syntax reset
 endif
 
-let colors_name = "adonis"
+let colors_name = "afrodite"
 
-hi Normal   guifg=#dad3a9 guibg=#333333
-hi Error    guifg=#ea445d guibg=#333333 gui=bold,underline,italic
-hi ErrorMsg guifg=#ea445d guibg=#333333 gui=bold
-hi LineNr   guifg=#9696d2 guibg=#383937
+hi Normal   guifg=#bbb9ba guibg=#24272e
+hi Normal   guifg=#c2c1c2 guibg=#24272e
+hi Error    guifg=#ea445d guibg=#24272e gui=bold,underline,italic
+hi ErrorMsg guifg=#ea445d guibg=#24272e gui=bold
+hi LineNr   guifg=#9696d2 guibg=#272C34
 
 " filler lines (~) after the last line in the buffer
-hi EndOfBuffer guifg=#333431 guibg=#333431
+hi EndOfBuffer guifg=#272C34 guibg=#272C34
 
 " Visual block
-hi Visual       guifg=#eeeeee guibg=#4e4e8f gui=none
+hi Visual       gui=none   guifg=#eeeeee   guibg=#4e4e8f
 hi VisualNOS	guifg=#8080ff guibg=fg	gui=reverse,underline
-hi Todo		guifg=#fc6a7f guibg=#333333 gui=bold
-hi Search	guifg=#1e1e27 guibg=#5499C7 gui=bold
+hi Todo		gui=bold guifg=#fc6a7f guibg=#24272e
+hi Search	gui=bold guifg=#1e1e27 guibg=#5499C7
 hi IncSearch	guifg=#b0ffff guibg=#2050d0
-hi MatchParen   guifg=#1e1e27 guibg=#5499C7 gui=bold
+hi MatchParen   gui=bold guifg=#1e1e27 guibg=#5499C7
 
 hi SpecialKey	guifg=#32c6d8 gui=none
 hi Directory	guifg=#39e5e5 gui=none
 hi Title	guifg=magenta gui=none
 hi WarningMsg	guifg=#eb3e6b gui=none
-hi WildMenu	guifg=#333333 guibg=#9fd6ff
+hi WildMenu	guifg=#24272e guibg=#9fd6ff
 hi ModeMsg	guifg=#22cce2
 hi MoreMsg	guifg=#eb3e6b
 hi Question	guifg=#73d216 gui=bold
 hi NonText	guifg=#0030ff
 hi StatusLine	guifg=#5b5b5b guibg=#dad3a9
 hi StatusLineNC	guifg=black guibg=darkgray gui=none
-hi VertSplit	guifg=#333333 guibg=#8066ff
+hi VertSplit	guifg=#24272e guibg=#8066ff
 
 hi Folded      guifg=#808080 guibg=#333431
 hi FoldColumn  guifg=#808080 guibg=#333431
-hi SignColumn  guifg=#808080 guibg=#2e2e2e
+hi SignColumn  guifg=#808080 guibg=#272C34
 
 hi DiffAdd     guibg=darkblue
 hi DiffChange  guibg=darkmagenta
 hi DiffDelete  gui=bold guifg=Blue guibg=DarkCyan
 hi DiffText    gui=bold guibg=Red
 
-hi Cursor      gui=bold  guifg=black  guibg=yellow
-hi lCursor     gui=none  guifg=#404040  guibg=#8fff8b
-hi iCursor     gui=bold  guifg=black    guibg=yellow
-hi CursorIM    gui=bold  guifg=#404040  guibg=#8b8bff
-hi CursonLine  guifg=#DAD3A9 guibg=#333333
-hi CursorLineNr guifg=#f42069 guibg=#333431
+hi Cursor      guifg=black  guibg=yellow  gui=bold
+hi iCursor     guifg=black  guibg=yellow  gui=bold
+hi lCursor     guifg=#404040 guibg=#8fff8b gui=none
+hi CursorIM    guifg=#404040 guibg=#8b8bff gui=bold
+hi CursonLine  guifg=#343b45 guibg=#24272e
+hi ColorColumn guibg=#343b45
+hi CursorLineNr guifg=#f42069 guibg=#272C34
 
 ""================ Buffer explorer settings star ================
-hi MBENormal          guifg=#8ac5f3 guibg=#333333
-hi MBEChanged         guifg=#ff0000 guibg=#333333
-hi MBEVisibleChanged  guifg=#ff0000 guibg=#333333
+hi MBENormal guifg=#2ec4b6 guibg=#24272e
 
-" The file which is visible and active(the curosor is in)
-hi MBEVisibleActiveNormal  guifg=#05A543 guibg=#333333 gui=underline,bold
+" active - cursor is in this window
+hi MBEVisibleNormal        guifg=#2ddc2d guibg=#24272e gui=italic
+hi MBEVisibleActiveNormal  guifg=#2ddc2d guibg=#24272e gui=bold
 
-" File is visible but not the active one
-hi MBEVisibleNormal guifg=#05A543 guibg=#333333 gui=none
-
-" Changed and is the active window
-hi MBEVisibleActiveChanged  guifg=#ff0000 guibg=#333333 gui=underline,bold
-
+hi MBEChanged               guifg=#db606b guibg=#24272e gui=italic
+hi MBEVisibleChanged        guifg=#db606b guibg=#24272e gui=italic
+hi MBEVisibleActiveChanged  guifg=#db606b guibg=#24272e gui=bold
 ""================ Buffer explorer settings end ================
 
-hi Type		guifg=#73D216 gui=none
+hi Type		guifg=#90d56e gui=none
 hi Ignore	guifg=bg
 hi Special	guifg=Orange
 hi Comment	guifg=#85929E gui=bold
-hi PreProc	guifg=#ff80ff gui=none cterm=none
+hi PreProc	guifg=#e580e5 gui=none
 hi Constant	guifg=#ffa0a0
-hi Statement	guifg=#EAEA0E gui=none
-hi Identifier	guifg=#39e5e5 cterm=none
-hi Underlined	cterm=underline term=underline
+hi Statement	guifg=#dede50 gui=none
+hi Identifier	guifg=#39e5e5
+hi Underlined	gui=underline
 
 " Popup menu
-hi Pmenu      guifg=#eeeeee guibg=#34495e
-hi PmenuSel   guifg=#eeeeee guibg=#2471a3 blend=0
+hi Pmenu      guifg=#eeeeee guibg=#333e56
+hi PmenuSel   guifg=#77e70b guibg=#38589d blend=0
 hi PmenuSbar  guibg=#48c9b0
 hi PmenuThumb guifg=#bdc3c7
 
-"hi Pmenu guifg=#eeeeee guibg=#3e4452
-"hi PmenuSel guifg=#eeeeee guibg=#5791c3 blend=0
+hi Pmenu      guifg=#eeeeee guibg=#4f5e81
+hi PmenuSel   guifg=#eeeeee guibg=#4f8159 blend=0
 
 " Highligts for fzf window
-hi FzfBg      guifg=#eeeeee guibg=#34495e
+hi FzfBg      guifg=#eeeeee guibg=#333e56
 hi FzfMatch   guifg=#77e70b gui=bold
-hi FzfCurline guifg=#cdcd0f guibg=#34495e
+hi FzfCurline guifg=#cdcd0f guibg=#333e56
 
 " Customization JP
-hi ColorColumn ctermbg=235 guibg=#51534F
 "hi def link cCustomFunc  Function
-hi cCustomFunc guifg=#dfcfe7
+hi cCustomFunc guifg=#88b6df
 hi cDelimiter guifg=#00BFFF
 
 " jpOPer2 are | ] [ {
