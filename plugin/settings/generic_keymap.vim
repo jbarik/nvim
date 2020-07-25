@@ -1,16 +1,16 @@
 nmap <Space>w  :w<CR>
-nmap <Space>ww :w!<CR>
+nmap <Space>fw :w!<CR>
 
 nmap <Leader>se :e ~/.config/nvim/init.vim<CR>
+nmap <Leader>ke :e ~/.config/nvim/plugin/settings/generic_keymap.vim<CR>
 
-nnoremap <Space>v V
-nmap <Space><Space> <C-V>
+nmap <Space>v <C-V>
 nmap <Leader><Space> :nohls<CR>
 
 " paste from primary/system clipboard
 nmap <Space>p "*p
 
-nmap <Leader>ff :call ShowFuncName()<CR>
+nmap <Leader>fn :call ShowFuncName()<CR>
 nmap <silent> <Leader>n  :call ToggleRelativeNumber()<CR>
 nmap <silent> <Leader>cc :call ToggleColorColumn()<CR>
 nnoremap <silent> <leader>cl :set cuc!<Bar>set cursorline!<CR>
@@ -37,15 +37,14 @@ nmap <Leader>l <C-W>l
 " Windows size
 " + Increase height, - Decrease height
 " > Increase width, > Decrease width
-nmap <Leader>i <C-W>+
-nmap <Leader>d <C-W>-
-nmap <Leader>> <C-W>>
-nmap <Leader>< <C-W><
+"nmap <Leader>+ <C-W>+
+"nmap <Leader>- <C-W>-
+"nmap <Leader>> <C-W>>
+"nmap <Leader>< <C-W><
 
 " Window resize instead of ctrl-w+- and ctrl-w++
-"nnoremap <silent> + :exe "resize ".(winheight(0) * 3/2) <CR>
-"nnoremap <silent> - :exe "resize ".(winheight(0) * 2/3) <CR>
-
+nnoremap <Leader>+ :exe "resize ".(winheight(0) * 3/2) <CR>
+nnoremap <Leader>- :exe "resize ".(winheight(0) * 2/3) <CR>
 
 " Page navigation
 nmap <Space>e $
@@ -61,7 +60,7 @@ nmap <Space>k <PageUp>
 nmap <F5> :%s/\s\+$//e<CR>
 
 " Close quickfixwindow
-nnoremap <Space>c :cclose<CR>
+nnoremap <Space>cl :cclose<CR>
 
 " Show leading whitespace
 ""nnoremap <Leader>s /\S\zs\s\+$<CR>

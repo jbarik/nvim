@@ -2,6 +2,9 @@ let s:ccls_enabled = isdirectory(working_dir . '/.sbtools/sbcpptags/ccls')
 " if !s:ccls_enabled
 "    return
 " end
+if  use_nvim_lsp
+   let s:ccls_enabled = 0
+end
 
 if s:ccls_enabled
    echo "Enabling vim-lsp with ccls"
@@ -39,15 +42,17 @@ if s:ccls_enabled
    let g:lsp_signs_warning = {'text': '⚠'}
    "let g:lsp_signs_hint = {'icon': '/path/to/some/other/icon'} " icons require GUI
 
+   let g:lsp_async_completion = 1
 
    noremap <silent> <Leader>rj :LspDefinition<CR>
    noremap <silent> <Leader>rJ :LspDeclaration<CR>
    noremap <silent> <Leader>rf :LspReferences<CR>
-   noremap <silent> <Leader>ri :LspHover<CR>
    noremap <silent> <Leader>rs :LspWorkspaceSymbol<CR>
    noremap <silent> <Leader>rv :LspImplementation<CR>
    noremap <silent> <Leader>rp :LspPeekDefinition<CR>
    noremap <silent> <Leader>rd :LspDocumentDiagnostics<CR>
+   "noremap <silent> <Leader>ri :LspHover<CR>
+   noremap <silent> K :LspHover<CR>
 end
 
 "
@@ -78,25 +83,6 @@ end
 "     endif
 "  end
 "
-"  let g:lsp_fold_enabled = 0
-"  let g:lsp_text_edit_enabled = 0
-"  let g:lsp_diagnostics_enabled = 1
-"  let g:lsp_virtual_text_enabled = 0
-"  let g:lsp_diagnostics_echo_cursor = 1
-"
-"  " This options makes a fresh request for a request e.g. hover info
-"  let g:lsp_preview_doubletap = 0
-"
-"  noremap <silent> <Leader>rj :LspDefinition<CR>
-"  noremap <silent> <Leader>rJ :LspDeclaration<CR>
-"  noremap <silent> <Leader>rf :LspReferences<CR>
-"  noremap <silent> <Leader>ri :LspHover<CR>
-"  noremap <silent> <Leader>rs :LspWorkspaceSymbol<CR>
-"  noremap <silent> <Leader>rv :LspImplementation<CR>
-"
-"  " Go back <C-o>, go forward <C-i>
-"  noremap <Leader>o <C-o>
-"  noremap <Leader>i <C-i>
 "
 "  " Debugging vim-lsp
 "  let g:lsp_log_verbose = 1

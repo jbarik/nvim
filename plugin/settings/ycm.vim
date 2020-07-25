@@ -21,17 +21,26 @@ else
    "let g:ycm_add_preview_to_completeopt = 1
    "let g:ycm_autoclose_preview_window_after_completion = 0
    let g:ycm_autoclose_preview_window_after_insertion = 1
+   let g:ycm_error_symbol = '✘'
+   let g:ycm_warning_symbol = '⚠'
 
    noremap <silent> <Leader>rj :YcmCompleter GoToDefinition<CR>
    noremap <silent> <Leader>rJ :YcmCompleter GoToDeclaration<CR>
    noremap <silent> <Leader>rf :YcmCompleter GoToReferences<CR>
-   noremap <silent> <Leader>ri :YcmCompleter GetDoc<CR>
+   "noremap <silent> <Leader>ri :YcmCompleter GetDoc<CR>
    noremap <silent> <Leader>rs :YcmCompleter<CR>
    noremap <silent> <Leader>rv :YcmCompleter GoToImplementation<CR>
    noremap <silent> <Leader>rn :YcmCompleter RefactorRename<CR>
    noremap <silent> <Leader>rx :YcmCompleter FixIt<CR>
+   autocmd FileType c,cpp,h,hpp nmap K :YcmGetDocFloatWin<cr>
 end
 
+function s:Hover()
+    let response = youcompleteme#GetCommandResponse('GetDoc')
+    call ShowTextInFloatingWindow(response)
+endfunction
+
+command YcmGetDocFloatWin :call <SID>Hover()
 
 " "ycm log level debug, info, warning, error, critical
 " let g:ycm_log_level = 'critical'
