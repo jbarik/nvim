@@ -114,6 +114,8 @@ Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'liuchengxu/vista.vim'
 
+Plug 'neovim/nvim-lsp'
+
 " See https://github.com/ncm2/ncm2
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
@@ -141,7 +143,7 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 "" filetype plugin indent on
 "" syntax enable
 
-colorscheme adonis
+colorscheme afrodite
 set guifont=Monospace\ 12
 "set guifont=Monospace\ /12/-1/5/63/0/0/0/1/0
 " font family (Monospace)
@@ -172,6 +174,13 @@ augroup custom_term
    autocmd!
    autocmd TermOpen * setlocal bufhidden=hide
 augroup END
+
+" Check and update if file has changed outsite vim
+autocmd BufEnter,FocusGained * checktime
+
+" nvim-lsp setting. The following line will source ./lua/lsp_init.lua
+let g:use_nvim_lsp = 0
+lua require 'lsp_init'
 
 "https://jeffkreeftmeijer.com/vim-16-color/
 "
