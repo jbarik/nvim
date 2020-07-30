@@ -22,10 +22,13 @@ if s:ccls_enabled
             \ . '"compilationDatabaseDirectory":"' . working_dir . '/.sbtools/sbcpptags",'
             \ . '"index":{"threads":12,"trackDependency":0}}'
    au User lsp_setup call lsp#register_server({
-            \ 'name': 'ccls',
-            \ 'cmd': ['ccls', s:ccls_args],
-            \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc']
+            \ 'name': 'ccls', 'cmd': ['ccls', s:ccls_args],
+            \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp']
             \ })
+
+   au User lsp_setup call lsp#register_server(
+            \ {'name': 'matlab', 'cmd': {server_info->['lsp_matlab']},
+            \   'allowlist': ['matlab']})
 
    let g:lsp_fold_enabled = 0
    let g:lsp_text_edit_enabled = 0
@@ -43,6 +46,8 @@ if s:ccls_enabled
    "let g:lsp_signs_hint = {'icon': '/path/to/some/other/icon'} " icons require GUI
 
    let g:lsp_async_completion = 1
+   let g:lsp_signature_help_enabled = 1
+   autocmd FileType matlab setlocal omnifunc=lsp#complete
 
    noremap <silent> <Leader>rj :LspDefinition<CR>
    noremap <silent> <Leader>rJ :LspDeclaration<CR>
@@ -55,35 +60,6 @@ if s:ccls_enabled
    noremap <silent> K :LspHover<CR>
 end
 
-"
-"  " Register ccls C++ lanuage server.
-"  if isdirectory(working_dir . '/.sbtools/sbcpptags/ccls')
-"     if executable('ccls')
-"   let s:ccls_args =  '--init={"cache":{"directory":"' . working_dir. '/..sbtools/sbcpptags/ccls"},'
-"            \ . '"clang":{"pathMappings":["/local-ssd/jbarik/.Bmasklib.latest_pass.sbsyncmaster.inprogress/>'
-"            \ . working_dir. '/","/local-ssd/jbarik/.Bmasklib.latest_pass.sbsyncmaster/>'
-"            \ . working_dir. '/","/local-ssd/jbarik/Bmasklib.latest_pass/>' . working_dir . '/"]},'
-"            \ . '"compilationDatabaseDirectory":"' . working_dir . '/.sbtools/sbcpptags",'
-"            \ . '"index":{"threads":12,"trackDependency":0}, "completion": {"detailedLabel":false}}'
-"        au User lsp_setup call lsp#register_server({
-"                 \ 'name': 'ccls',
-"                 \ 'cmd': {server_info->['ccls']},
-"                 \ 'initialization_options': {
-"                 \     'cache': {'directory': working_dir. '/.sbtools/sbcpptags/ccls'},
-"                 \     'clang': { 'pathMappings':
-"                 \                ['/local-ssd/jbarik/Bmasklib.latest_pass.sbsyncmaster.inprogress/>'. working_dir. '/',
-"                 \                 '/local-ssd/jbarik/Bmasklib.latest_pass.sbsyncmaster/>'. working_dir. '/',
-"                 \                 '/local-ssd/jbarik/Bmasklib.latest_pass/>'. working_dir. '/']},
-"                 \     'compilationDatabaseDirectory': working_dir. '/.sbtools/sbcpptags',
-"                 \     'completion': {'detailedLabel': v:false},
-"                 \     'index': {'threads':12, 'trackDependency':0}
-"                 \  },
-"                 \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc']
-"                 \ })
-"     endif
-"  end
-"
-"
 "  " Debugging vim-lsp
 "  let g:lsp_log_verbose = 1
 "  let g:lsp_log_file = expand('~/vim-lsp.log')
