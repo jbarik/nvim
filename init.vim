@@ -67,14 +67,18 @@ set pumblend=15
 "hi PmenuSel blend=0
 
 " ================ Completion ================================================
-" wildmode list::longest,full expands the suggestions in
-" command line
 "set completeopt=menu,menuone,longest,preview
 "set completeopt=menu,menuone,longest,previewpopup
 set completeopt=noinsert,menuone,noselect
 
-set wildmenu
+" wildmode list::longest,full expands the suggestions in
+" command line
 set wildmode=list:longest,full
+set wildmenu
+
+" Makes floating PopUpMenu for completing stuff on the command line.
+"     Very similar to completing in insert mode.
+"set wildoptions+=pum
 
 " ================ Fold ======================================================
 set nofoldenable " disable folds
@@ -95,14 +99,16 @@ Plug 'easymotion/vim-easymotion'
 
 Plug 'tpope/vim-obsession'
 Plug 'fholgado/minibufexpl.vim'
-Plug 'jceb/vim-orgmode' | Plug 'tpope/vim-speeddating'
+Plug 'jceb/vim-orgmode' | Plug 'tpope/vim-speeddating' | Plug 'vim-scripts/utl.vim'
 
 " See https://github.com/rbong/vim-crystalline
 Plug 'itchyny/lightline.vim'| Plug 'maximbaz/lightline-trailing-whitespace'
 
+Plug 'nfvs/vim-perforce'
+"Plug 'rhysd/git-messenger.vim'
+
 Plug 'w0rp/ale'
 Plug 'm-pilia/vim-ccls'
-Plug 'nfvs/vim-perforce'
 Plug 'danro/rename.vim'
 " This is for code snippets, header guard
 Plug 'mbbill/code_complete'
@@ -113,7 +119,6 @@ Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'liuchengxu/vista.vim'
-
 Plug 'neovim/nvim-lsp'
 
 " See https://github.com/ncm2/ncm2
@@ -121,7 +126,6 @@ Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-vim-lsp'
 Plug 'ncm2/float-preview.nvim'
-
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-bufword'
 Plug 'fgrsnau/ncm2-otherbuf'
@@ -130,6 +134,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'vim-scripts/DrawIt'
+
+" Zoom in/out
+Plug 'troydm/zoomwintab.vim'
 
 call plug#end()
 
@@ -140,8 +147,6 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 "let g:loaded_youcompleteme = 1
 
-"" filetype plugin indent on
-"" syntax enable
 
 colorscheme afrodite
 set guifont=Monospace\ 12
@@ -178,27 +183,28 @@ augroup END
 " Check and update if file has changed outsite vim
 autocmd BufEnter,FocusGained * checktime
 
+
 " nvim-lsp setting. The following line will source ./lua/lsp_init.lua
 let g:use_nvim_lsp = 0
 lua require 'lsp_init'
 
 "https://jeffkreeftmeijer.com/vim-16-color/
 "
-" Normal - Black
+" Normal - Black  0
+" Normal - Red    1
+" Normal - Green  2
+" Normal - Yellow 3
+" Normal - Blue   4
+" Normal - Purple 5
+" Normal - Cyan   6
+" Normal - White  7
 let g:terminal_color_0  = '#2e3436'
-" Normal - Red
 let g:terminal_color_1  = '#ed4c4c'
-" Normal - Green
 let g:terminal_color_2  = '#6bb91f'
-" Normal -Yellow
 let g:terminal_color_3  = '#ffff66'
-" Normal - Blue
 let g:terminal_color_4  = '#81a7d7'
-" Normal - Purple
 let g:terminal_color_5  = '#b55ef1'
-" Normal - Cyan
 let g:terminal_color_6  = '#0daab3'
-" Normal - White
 let g:terminal_color_7  = '#e0e3dd'
 "
 " Bright - Black   8
@@ -206,6 +212,7 @@ let g:terminal_color_7  = '#e0e3dd'
 " Bright - Green  10
 " Bright - Yellow 11
 " Bright - Blue   12
+" Bright - Purple 13
 " Bright - Cyan   14
 " Bright - White  15
 let g:terminal_color_8  = '#555753'
@@ -213,7 +220,6 @@ let g:terminal_color_9  = '#ef2929'
 let g:terminal_color_10 = '#8ae234'
 let g:terminal_color_11 = '#fce94f'
 let g:terminal_color_12 = '#729fcf'
-" Bright - Purple 13
 let g:terminal_color_13 = '#f15ee4'
 let g:terminal_color_14 = '#00f5e9'
 let g:terminal_color_15 = '#eeeeec'
