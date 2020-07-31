@@ -8,7 +8,6 @@ endif
 
 let colors_name = "afrodite"
 
-hi Normal   guifg=#bbb9ba guibg=#24272e
 hi Normal   guifg=#c2c1c2 guibg=#24272e
 hi Error    guifg=#ea445d guibg=#24272e gui=bold,underline,italic
 hi ErrorMsg guifg=#ea445d guibg=#24272e gui=bold
@@ -18,10 +17,11 @@ hi LineNr   guifg=#9696d2 guibg=#272C34
 hi EndOfBuffer guifg=#272C34 guibg=#272C34
 
 " Visual block
-hi Visual       gui=none   guifg=#eeeeee   guibg=#4e4e8f
+"hi Visual       gui=none   guifg=#eeeeee   guibg=#4e4e8f
+hi Visual       guibg=#1063A6
 hi VisualNOS	guifg=#8080ff guibg=fg	gui=reverse,underline
 hi Todo		gui=bold guifg=#fc6a7f guibg=#24272e
-hi Search	gui=bold guifg=#1e1e27 guibg=#5499C7
+hi Search       guibg=#0097a7
 hi IncSearch	guifg=#b0ffff guibg=#2050d0
 hi MatchParen   gui=bold guifg=#1e1e27 guibg=#5499C7
 
