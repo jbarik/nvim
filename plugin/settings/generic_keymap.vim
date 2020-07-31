@@ -1,8 +1,11 @@
 nmap <Space>w  :w<CR>
 nmap <Space>fw :w!<CR>
+nmap <Space>q  :q<CR>
+nmap <Space>fq :qa!<CR>
 
-nmap <Leader>se :e ~/.config/nvim/init.vim<CR>
-nmap <Leader>ke :e ~/.config/nvim/plugin/settings/generic_keymap.vim<CR>
+nmap <Leader>en :e ~/.config/nvim/init.vim<CR>
+nmap <Leader>ek :e ~/.config/nvim/plugin/settings/generic_keymap.vim<CR>
+nmap <Leader>eg :e ~/.gdbinit<CR>
 
 nmap <Space>v <C-V>
 nmap <Leader><Space> :nohls<CR>
@@ -15,14 +18,15 @@ nmap <silent> <Leader>n  :call ToggleRelativeNumber()<CR>
 nmap <silent> <Leader>cc :call ToggleColorColumn()<CR>
 nnoremap <silent> <leader>cl :set cuc!<Bar>set cursorline!<CR>
 
-" copy current file relative path
-nmap <Leader>cr :let @*=expand("%")<CR>
 
 " copy current file full path
 nmap <Leader>cf :let @*=expand("%:p")<CR>
 
 " copy current file name
 nmap <Leader>ct :let @*=expand("%:t")<CR>
+
+" copy current file relative path
+nmap <Leader>cr :let @*=expand("%")<CR>
 
 " copy current file's directory name
 nmap <Leader>cd :let @*=expand("%:p:h")<CR>
@@ -72,7 +76,7 @@ nnoremap <F6> :read !p4 opened \| cut -f1 -d'\#' \| cut -f5-89 -d'/'<CR>
 
 " The following map will exapnd the current files directory
 " in the the ex command window so that you can open any
-nnoremap <Leader>e :e <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <Leader>a :e <C-R>=expand('%:p:h') . '/'<CR>
 
 " Copy the finename:line_no to system clipboard
 " Helpful to use it in gdb - for breakpoints
