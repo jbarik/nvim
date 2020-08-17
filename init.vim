@@ -88,57 +88,71 @@ set nofoldenable " disable folds
 "  2nd   val is the dir of the current file
 set path=,,.,/usr/include
 
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.config/nvim/plugged')
+" Load packager only when you need it
+function! PackagerInit() abort
+   packadd vim-packager
+   call packager#init()
 
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
-Plug 'easymotion/vim-easymotion'
+   call packager#add('junegunn/vim-easy-align')
+   call packager#add('easymotion/vim-easymotion')
+   call packager#add('tpope/vim-obsession')
+   call packager#add('tpope/vim-surround')
+   call packager#add('fholgado/minibufexpl.vim')
 
-Plug 'tpope/vim-obsession'
-Plug 'fholgado/minibufexpl.vim'
-Plug 'jceb/vim-orgmode' | Plug 'tpope/vim-speeddating' | Plug 'vim-scripts/utl.vim'
+   call packager#add('jceb/vim-orgmode')
+   call packager#add('tpope/vim-speeddating')
+   call packager#add('vim-scripts/utl.vim')
+   call packager#add('inkarkat/vim-SyntaxRange')
 
-" See https://github.com/rbong/vim-crystalline
-Plug 'itchyny/lightline.vim'| Plug 'maximbaz/lightline-trailing-whitespace'
+   " See https://github.com/rbong/vim-crystalline
+   call packager#add('itchyny/lightline.vim')
+   call packager#add('maximbaz/lightline-trailing-whitespace')
+   call packager#add('nfvs/vim-perforce')
+   "Plug 'rhysd/git-messenger.vim'
 
-Plug 'nfvs/vim-perforce'
-"Plug 'rhysd/git-messenger.vim'
+   call packager#add('w0rp/ale')
+   call packager#add('m-pilia/vim-ccls')
+   " This is for code snippets, header guard
+   call packager#add('mbbill/code_complete')
+   call packager#add('sheerun/vim-polyglot')
+   call packager#add('ycm-core/YouCompleteMe')
+   call packager#add('prabirshrestha/vim-lsp')
+   call packager#add('prabirshrestha/async.vim')
+   call packager#add('liuchengxu/vista.vim')
 
-Plug 'w0rp/ale'
-Plug 'm-pilia/vim-ccls'
-Plug 'danro/rename.vim'
-" This is for code snippets, header guard
-Plug 'mbbill/code_complete'
-Plug 'sheerun/vim-polyglot'
-Plug 'ycm-core/YouCompleteMe'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/async.vim'
-"Plug 'prabirshrestha/asyncomplete.vim'
-"Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'liuchengxu/vista.vim'
-Plug 'neovim/nvim-lsp'
+   call packager#add('neovim/nvim-lsp')
+   "call packager#add('nvim-lua/diagnostic-nvim')
+   "call packager#add('nvim-lua/completion-nvim')
+   "call packager#add('steelsojka/completion-buffers')
+   "call packager#add('nvim-treesitter/nvim-treesitter')
+   "call packager#add('nvim-treesitter/completion-treesitter')
 
-" See https://github.com/ncm2/ncm2
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-vim-lsp'
-Plug 'ncm2/float-preview.nvim'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-bufword'
-Plug 'fgrsnau/ncm2-otherbuf'
+   call packager#add('ncm2/ncm2')
+   call packager#add('roxma/nvim-yarp')
+   call packager#add('ncm2/ncm2-vim-lsp')
+   call packager#add('ncm2/float-preview.nvim')
+   call packager#add('ncm2/ncm2-path')
+   call packager#add('ncm2/ncm2-bufword')
+   call packager#add('fgrsnau/ncm2-otherbuf')
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+   call packager#add('junegunn/fzf', {'do': './install --all && ln -s $(pwd) ~/.fzf'})
+   call packager#add('junegunn/fzf.vim')
 
-Plug 'vim-scripts/DrawIt'
+   call packager#add('kyazdani42/nvim-web-devicons') " for file icons
+   call packager#add('kyazdani42/nvim-tree.lua')
 
-" Zoom in/out
-Plug 'troydm/zoomwintab.vim'
+   call packager#add('vim-scripts/DrawIt')
+   " Zoom in/out
+   call packager#add('troydm/zoomwintab.vim')
+   "call packager#add('danro/rename.vim')
+   "Plug 'prabirshrestha/asyncomplete.vim'
+   "Plug 'prabirshrestha/asyncomplete-lsp.vim'
+endfunction
 
-call plug#end()
+command! PackagerInstall call PackagerInit() | call packager#install()
+command! -bang PackagerUpdate call PackagerInit() | call packager#update({ 'force_hooks': '<bang>' })
+command! PackagerClean call PackagerInit() | call packager#clean()
+command! PackagerStatus call PackagerInit() | call packager#status()
 
 "When the <Enter> key is pressed while the popup menu is visible, it only
 "hides the menu. Use this mapping to close the menu and also start a new
@@ -146,7 +160,6 @@ call plug#end()
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 "let g:loaded_youcompleteme = 1
-
 
 colorscheme afrodite
 set guifont=Monospace\ 12
@@ -183,21 +196,22 @@ augroup END
 " Check and update if file has changed outsite vim
 autocmd BufEnter,FocusGained * checktime
 
+" Unless we disable mathematic, it overrides matlab files as mma
+let g:polyglot_disabled = ['mathematica']
 
 " nvim-lsp setting. The following line will source ./lua/lsp_init.lua
 let g:use_nvim_lsp = 0
 lua require 'lsp_init'
 
 "https://jeffkreeftmeijer.com/vim-16-color/
-"
-" Normal - Black  0
-" Normal - Red    1
-" Normal - Green  2
-" Normal - Yellow 3
-" Normal - Blue   4
-" Normal - Purple 5
-" Normal - Cyan   6
-" Normal - White  7
+" Normal - Black  0   Bright - Black   8
+" Normal - Red    1   Bright - Red     9
+" Normal - Green  2   Bright - Green  10
+" Normal - Yellow 3   Bright - Yellow 11
+" Normal - Blue   4   Bright - Blue   12
+" Normal - Purple 5   Bright - Purple 13
+" Normal - Cyan   6   Bright - Cyan   14
+" Normal - White  7   Bright - White  15
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#ed4c4c'
 let g:terminal_color_2  = '#6bb91f'
@@ -206,15 +220,6 @@ let g:terminal_color_4  = '#81a7d7'
 let g:terminal_color_5  = '#b55ef1'
 let g:terminal_color_6  = '#0daab3'
 let g:terminal_color_7  = '#e0e3dd'
-"
-" Bright - Black   8
-" Bright - Red     9
-" Bright - Green  10
-" Bright - Yellow 11
-" Bright - Blue   12
-" Bright - Purple 13
-" Bright - Cyan   14
-" Bright - White  15
 let g:terminal_color_8  = '#555753'
 let g:terminal_color_9  = '#ef2929'
 let g:terminal_color_10 = '#8ae234'
@@ -223,12 +228,3 @@ let g:terminal_color_12 = '#729fcf'
 let g:terminal_color_13 = '#f15ee4'
 let g:terminal_color_14 = '#00f5e9'
 let g:terminal_color_15 = '#eeeeec'
-"let g:terminal_color_0  = '#2e3436'
-"let g:terminal_color_1  = '#cc0000'
-"let g:terminal_color_2  = '#4e9a06'
-"let g:terminal_color_3  = '#c4a000'
-"let g:terminal_color_4  = '#3465a4'
-"let g:terminal_color_5  = '#75507b'
-"let g:terminal_color_6  = '#0b939b'
-"let g:terminal_color_7  = '#d3d7cf'
-"let g:terminal_color_13 = '#ad7fa8'
