@@ -1,7 +1,8 @@
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'matlab': ['mlint'],
 \}
+" \   'matlab': ['mlint'],
+
 
 " Only run linters named in ale_linters settings.
 "let g:ale_linters_explicit = 1
@@ -11,6 +12,7 @@ let g:ale_pattern_options = {
 \   '.*\.c$': {'ale_enabled': 0},
 \   '.*\.hpp$': {'ale_enabled': 0},
 \   '.*\.h$': {'ale_enabled': 0},
+\   '.*\.m$': {'ale_enabled': 0},
 \}
 
 let g:ale_set_loclist = 0

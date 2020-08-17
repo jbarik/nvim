@@ -1,8 +1,24 @@
-nmap <silent> <Space>b :Buffer<CR>
+let g:fzf_preview_window = '' " Disable preview
+nmap <silent> <Space>sb :Buffer<CR>
 "nmap <silent> <Space>h :History<CR> " By default history shows preview
-nmap <silent> <Space>h :call fzf#vim#history({})<CR>
-nnoremap <silent> <Space>f :Files <C-r>=expand("%:h")<CR>/<CR>
-nnoremap <silent> <Space>l :Lines<CR>
+nmap <silent> <Space>sh :call fzf#vim#history({})<CR>
+nnoremap <silent> <Space>sf :Files <C-r>=expand("%:h")<CR>/<CR>
+nnoremap <silent> <Space>sl :Lines<CR>
+
+let g:fzf_use_fdfind = 0
+let s:find_command = 'find '
+let s:find_options = ' -type d'
+function! FindToggle()
+    if g:fzf_use_fdfind
+       let g:fzf_use_fdfind = 0
+       let s:find_command = 'find '
+       let s:find_options = ' -type d'
+    else
+       let g:fzf_use_fdfind = 1
+       let s:find_command = 'fdfind --type d --full-path '
+       let s:find_options = ''
+    endif
+endfunction
 
 "================================================================================
 function AgSearchFile(...)
@@ -16,8 +32,7 @@ function AgSearchFile(...)
          \                        'options':['--ansi', '--multi', '--color', 'hl:4,hl+:12']}))
 endfunction
 
-nmap <Space>a :SearchFile matlab/src
-nmap <Space>ca :SearchFile matlab/src <C-r><C-w>
+nmap <Space>sa :SearchFile matlab/src
 command! -bang -complete=dir -nargs=+ SearchFile call AgSearchFile(<f-args>)
 "================================================================================
 
@@ -36,8 +51,7 @@ function RgSearch(...)
             \        l:search_exp. ' '.a:1, 1)
 endfunction
 
-nmap <Space>r :SearchPattern matlab/src
-nmap <Space>cr :SearchPattern matlab/src <C-r><C-w>
+nmap <Space>sp :SearchPattern matlab/src
 command! -bang -complete=dir -nargs=+ SearchPattern call RgSearch(<f-args>)
 "================================================================================
 
@@ -71,11 +85,11 @@ function! DirSearch(...)
 
    call fzf#run(fzf#wrap({
             \ 'options': ['--prompt', a:1.'> '],
-            \ 'source': 'find ' .a:1. ' -type d',
+            \ 'source': s:find_command .a:1. s:find_options,
             \ 'sink': function('TriggerFileSearch')}))
 endfunction
 
-nmap <Space>d :SearchDir matlab/
+nmap <Space>sd :SearchDir matlab/
 command! -bang -complete=dir -nargs=+ SearchDir call DirSearch(<f-args>)
 "========================================================================
 

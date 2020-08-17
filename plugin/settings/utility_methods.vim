@@ -27,6 +27,8 @@ function! ToggleRelativeNumber()
    endif
 endfunction
 
+" See the following link for lua implementation of floating window
+"https://gabrielpoca.com/2019-11-13-a-bit-more-lua-in-your-vim/
 function ShowTextInFloatingWindow(text)
     if a:text == ''
         return
@@ -51,5 +53,16 @@ function ShowTextInFloatingWindow(text)
     call nvim_win_set_option(s:win, 'linebreak', v:true)
     " close the window once the cursor moved
     autocmd CursorMoved <buffer> ++once call nvim_win_close(s:win, v:false)
+endfunction
+
+" Rename the current file
+function! Rename()
+  let current = expand('%')
+  let new_file = input('New name: ', current)
+  if new_file != current && new_file != ''
+    exec ':saveas ' . new_file
+    exec ':silent !rm ' . current
+    redraw!
+  endif
 endfunction
 
