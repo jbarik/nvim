@@ -1,11 +1,11 @@
-syn match jpOper1 "||\|&&\|[-+.*]\|[<>]\|&"
-syn match jpOper1 "\(==\|!=\|>=\|<=\|=\~\|!\~\|>\|<\|=\)"
+syn match langOper "||\|&&\|[-+.*]\|[<>]\|&"
+syn match langOper "\(==\|!=\|>=\|<=\|=\~\|!\~\|>\|<\|=\)"
+syn match langOper "(\|)"
+syn match langOper "{\|}"
+syn match langOper /\[/
+syn match langOper /\]/
 
-syn match jpOper2 "(\|)"
-syn match jpOper2 "{\|}"
-syn match jpOper2 /\[/
-syn match jpOper2 /\]/
+hi def link langOper Operator
 
-""syn match jpOper3 ",\|;\|:\|?"
-
-hi def link jpOper1 Operator     	
+syn match   cCustomFunc  "\w\+\s*(\@="
+hi def link cCustomFunc  Function
