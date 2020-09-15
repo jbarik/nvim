@@ -43,9 +43,9 @@ set ruler       " Show line number and col number of cursor
 set showbreak=↪ " ↳ Type: insertmode ctrl+v u21B3 ⇶  ℱ X
 
 " ================ Indention =================================================
-set cindent shiftwidth=3
 set softtabstop=3 " Make Vim treat <Tab> key as 3 spaces, but respect hard Tabs.
 set shiftwidth=3
+set cindent
 set expandtab     " Turn Tab keypresses into spaces. You can still insert
                   " real Tabs as [Ctrl]-V [Tab]
 
@@ -94,7 +94,9 @@ function! PackagerInit() abort
    call packager#init()
 
    call packager#add('junegunn/vim-easy-align')
-   call packager#add('easymotion/vim-easymotion')
+   "call packager#add('easymotion/vim-easymotion')
+   call packager#add('justinmk/vim-sneak')
+   "call packager#add('justinmk/vim-gtfo')
    call packager#add('tpope/vim-obsession')
    call packager#add('tpope/vim-surround')
    call packager#add('fholgado/minibufexpl.vim')
@@ -115,6 +117,7 @@ function! PackagerInit() abort
    " This is for code snippets, header guard
    call packager#add('mbbill/code_complete')
    call packager#add('sheerun/vim-polyglot')
+   call packager#add('bfrg/vim-cpp-modern')
    call packager#add('ycm-core/YouCompleteMe')
    call packager#add('prabirshrestha/vim-lsp')
    call packager#add('prabirshrestha/async.vim')
@@ -134,12 +137,13 @@ function! PackagerInit() abort
    call packager#add('ncm2/ncm2-path')
    call packager#add('ncm2/ncm2-bufword')
    call packager#add('fgrsnau/ncm2-otherbuf')
-
    call packager#add('junegunn/fzf', {'do': './install --all && ln -s $(pwd) ~/.fzf'})
    call packager#add('junegunn/fzf.vim')
 
-   call packager#add('kyazdani42/nvim-web-devicons') " for file icons
-   call packager#add('kyazdani42/nvim-tree.lua')
+   "call packager#add('kyazdani42/nvim-web-devicons') " for file icons
+   "call packager#add('kyazdani42/nvim-tree.lua')
+   call packager#add('justinmk/vim-dirvish')
+   call packager#add('roginfarrer/vim-dirvish-dovish')
 
    call packager#add('vim-scripts/DrawIt')
    " Zoom in/out
@@ -162,7 +166,8 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 "let g:loaded_youcompleteme = 1
 
 colorscheme afrodite
-set guifont=Monospace\ 12
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
+"set guifont=Monospace\ 12
 "set guifont=Monospace\ /12/-1/5/63/0/0/0/1/0
 " font family (Monospace)
 " point size (12)
@@ -195,6 +200,9 @@ augroup END
 
 " Check and update if file has changed outsite vim
 autocmd BufEnter,FocusGained * checktime
+
+" Don't load netrw
+let loaded_netrwPlugin = 1
 
 " Unless we disable mathematic, it overrides matlab files as mma
 let g:polyglot_disabled = ['mathematica']
