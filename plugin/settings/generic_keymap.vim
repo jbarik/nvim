@@ -20,11 +20,11 @@ nn <silent> <leader>cl :set cuc!<Bar>set cursorline!<CR>
 
 " copy current file full path
 nn <Space>cf :let @*=expand("%:p")<CR>
-" copy current file name
+" copy current file name, t for tail
 nn <Space>ct :let @*=expand("%:t")<CR>
 " copy current file relative path
 nn <Space>cr :let @*=expand("%")<CR>
-" copy current file's directory name
+" copy current file's directory name, h for head
 nn <Space>cd :let @*=expand("%:p:h")<CR>
 
 " Copy the finename:line_no to system clipboard
@@ -54,6 +54,7 @@ nn <Leader>- :exe "resize ".(winheight(0) * 2/3) <CR>
 nmap <Space>e $
 nmap <Space>j <PageDown>
 nmap <Space>k <PageUp>
+nmap <Space>g <C-g>
 
 " Cursor navigation
 " H -> cursor to top of screen

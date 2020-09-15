@@ -12,8 +12,8 @@ let g:ccls_levels = 5
 "CclsCallees           CclsDerived           CclsMemberHierarchy   CclsVars
 "CclsCallers           CclsDerivedHierarchy  CclsMembers
 
-noremap <silent> <Leader>rb :CclsBase<CR>
-noremap <silent> <Leader>rd :CclsDerived<CR>
-noremap <silent> <Leader>rce :CclsCallees<CR>
-noremap <silent> <Leader>rce :CclsCallers<CR>
+noremap <silent> <Space>rb :CclsBase<CR>
+noremap <silent> <Space>rs :CclsDerived<CR>
+noremap <silent> <Space>re :CclsCallees<CR>
+noremap <silent> <Space>rl :CclsCallers<CR>
 

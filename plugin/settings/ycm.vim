@@ -24,15 +24,16 @@ else
    let g:ycm_error_symbol = '✘'
    let g:ycm_warning_symbol = '⚠'
 
-   noremap <silent> <Leader>rj :YcmCompleter GoToDefinition<CR>
-   noremap <silent> <Leader>rJ :YcmCompleter GoToDeclaration<CR>
-   noremap <silent> <Leader>rf :YcmCompleter GoToReferences<CR>
+   noremap <silent> <Space>rj :YcmCompleter GoToDefinition<CR>
+   noremap <silent> <Space>rJ :YcmCompleter GoToDeclaration<CR>
+   noremap <silent> <Space>rf :YcmCompleter GoToReferences<CR>
+   noremap <silent> <Space>rs :YcmCompleter<CR>
+   noremap <silent> <Space>rv :YcmCompleter GoToImplementation<CR>
+   noremap <silent> <Space>rd :YcmDiags<CR>
+   noremap <silent> <Space>rn :YcmCompleter RefactorRename<CR>
+   noremap <silent> <Space>rx :YcmCompleter FixIt<CR>
+   autocmd FileType c,cpp nmap K :YcmGetDocFloatWin<cr>
    "noremap <silent> <Leader>ri :YcmCompleter GetDoc<CR>
-   noremap <silent> <Leader>rs :YcmCompleter<CR>
-   noremap <silent> <Leader>rv :YcmCompleter GoToImplementation<CR>
-   noremap <silent> <Leader>rn :YcmCompleter RefactorRename<CR>
-   noremap <silent> <Leader>rx :YcmCompleter FixIt<CR>
-   autocmd FileType c,cpp,h,hpp nmap K :YcmGetDocFloatWin<cr>
 end
 
 function s:Hover()

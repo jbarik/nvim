@@ -20,6 +20,7 @@ if s:ccls_enabled
             \ . working_dir. '/","/local-ssd/jbarik/.Bmasklib.latest_pass.sbsyncmaster/>'
             \ . working_dir. '/","/local-ssd/jbarik/Bmasklib.latest_pass/>' . working_dir . '/"]},'
             \ . '"compilationDatabaseDirectory":"' . working_dir . '/.sbtools/sbcpptags",'
+            \ . '"diagnostics":{"onOpen":0,"onChange":-1,"onSave":0},'
             \ . '"index":{"threads":12,"trackDependency":0}}'
    au User lsp_setup call lsp#register_server({
             \ 'name': 'ccls', 'cmd': ['ccls', s:ccls_args],
@@ -40,24 +41,25 @@ if s:ccls_enabled
    " This options makes a fresh request for a request e.g. hover info
    let g:lsp_preview_doubletap = 0
 
-   " ✘ ✗ ✖
+   " ✘ ✗ ✖ ⛛  ☠ ☢
    let g:lsp_signs_error = {'text': '✘'}
    let g:lsp_signs_warning = {'text': '⚠'}
    "let g:lsp_signs_hint = {'icon': '/path/to/some/other/icon'} " icons require GUI
 
    let g:lsp_async_completion = 1
    let g:lsp_signature_help_enabled = 1
-   autocmd FileType matlab setlocal omnifunc=lsp#complete
+   "autocmd FileType matlab setlocal omnifunc=lsp#complete
+   let g:lsp_highlight_references_enabled = 0
 
-   noremap <silent> <Leader>rj :LspDefinition<CR>
-   noremap <silent> <Leader>rJ :LspDeclaration<CR>
-   noremap <silent> <Leader>rf :LspReferences<CR>
-   noremap <silent> <Leader>rs :LspWorkspaceSymbol<CR>
-   noremap <silent> <Leader>rv :LspImplementation<CR>
-   noremap <silent> <Leader>rp :LspPeekDefinition<CR>
-   noremap <silent> <Leader>rd :LspDocumentDiagnostics<CR>
+   noremap <silent> <Space>rj :LspDefinition<CR>
+   noremap <silent> <Space>rJ :LspDeclaration<CR>
+   noremap <silent> <Space>rf :LspReferences<CR>
+   noremap <silent> <Space>rs :LspWorkspaceSymbol<CR>
+   noremap <silent> <Space>rv :LspImplementation<CR>
+   noremap <silent> <Space>rp :LspPeekDefinition<CR>
+   noremap <silent> <Space>rd :LspDocumentDiagnostics<CR>
    "noremap <silent> <Leader>ri :LspHover<CR>
-   noremap <silent> K :LspHover<CR>
+   autocmd FileType cpp,c,matlab noremap <silent> K :LspHover<CR>
 end
 
 "  " Debugging vim-lsp

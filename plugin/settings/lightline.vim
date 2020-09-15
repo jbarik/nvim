@@ -8,8 +8,8 @@ let g:lightline = {
       \             ],
       \     'right': [ ['trailing'], ['lineinfo', 'percent'] ]
       \ },
-      \ 'separator' : { 'left': "▶", 'right': "◀" },
-      \ 'subseparator': { 'left': "»", 'right': "«" }
+      \ 'separator' : { 'left': "", 'right': "" },
+      \ 'subseparator': { 'left': "", 'right': "" }
       \ }
 
 " \ 'colorscheme': 'one',

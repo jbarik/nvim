@@ -65,4 +65,5 @@ function! Rename()
     redraw!
   endif
 endfunction
+command! -bang Rename call Rename()
 
