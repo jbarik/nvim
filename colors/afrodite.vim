@@ -11,32 +11,31 @@ let colors_name = "afrodite"
 hi Normal   guifg=#c2c1c2 guibg=#24272e
 hi Error    guifg=#ea445d guibg=#24272e gui=bold,underline,italic
 hi ErrorMsg guifg=#ea445d guibg=#24272e gui=bold
-hi LineNr   guifg=#9696d2 guibg=#272C34
+hi LineNr   guifg=#9696d2 guibg=#272c34
 
 " filler lines (~) after the last line in the buffer
-hi EndOfBuffer guifg=#272C34 guibg=#272C34
+hi EndOfBuffer guifg=#272c34 guibg=#272c34
 
 " Visual block
 "hi Visual       gui=none   guifg=#eeeeee   guibg=#4e4e8f
 hi Visual       guibg=#1063A6
 hi VisualNOS	guifg=#8080ff guibg=fg	gui=reverse,underline
-hi Todo		gui=bold guifg=#fc6a7f guibg=#24272e
+hi Todo		guifg=#fc6a7f guibg=#24272e gui=bold
 hi Search       guibg=#0097a7
 hi IncSearch	guifg=#b0ffff guibg=#2050d0
-hi MatchParen   gui=bold guifg=#1e1e27 guibg=#5499C7
+hi MatchParen   guifg=#1e1e27 guibg=#5499C7 gui=bold
 
-hi SpecialKey	guifg=#32c6d8 gui=none
-hi Directory	guifg=#39e5e5 gui=none
-hi Title	guifg=magenta gui=none
-hi WarningMsg	guifg=#eb3e6b gui=none
+hi SpecialKey	guifg=#32c6d8
+hi Title	guifg=#e692fc
+hi WarningMsg	guifg=#eb3e6b
 hi WildMenu	guifg=#24272e guibg=#9fd6ff
 hi ModeMsg	guifg=#22cce2
 hi MoreMsg	guifg=#eb3e6b
 hi Question	guifg=#73d216 gui=bold
 hi NonText	guifg=#0030ff
-hi StatusLine	guifg=#5b5b5b guibg=#dad3a9
-hi StatusLineNC	guifg=black guibg=darkgray gui=none
 hi VertSplit	guifg=#24272e guibg=#8066ff
+hi StatusLine	guifg=#5b5b5b guibg=#dad3a9
+hi StatusLineNC	guifg=black guibg=darkgray
 
 hi Folded      guifg=#808080 guibg=#333431
 hi FoldColumn  guifg=#808080 guibg=#333431
@@ -53,7 +52,7 @@ hi lCursor     guifg=#404040 guibg=#8fff8b gui=none
 hi CursorIM    guifg=#404040 guibg=#8b8bff gui=bold
 hi CursonLine  guifg=#343b45 guibg=#24272e
 hi ColorColumn guibg=#343b45
-hi CursorLineNr guifg=#f42069 guibg=#272C34
+hi CursorLineNr guifg=#f42069 guibg=#272c34
 
 ""================ Buffer explorer settings star ================
 hi MBENormal guifg=#2ec4b6 guibg=#24272e
@@ -70,12 +69,14 @@ hi MBEVisibleActiveChanged  guifg=#db606b guibg=#24272e gui=bold
 hi Type		guifg=#90d56e gui=none
 hi Ignore	guifg=bg
 hi Special	guifg=Orange
-hi Comment	guifg=#85929E gui=bold
+hi Comment	guifg=#85929E
 hi PreProc	guifg=#e580e5 gui=none
 hi Constant	guifg=#ffa0a0
-hi Statement	guifg=#dede50 gui=none
-hi Identifier	guifg=#39e5e5
-hi Underlined	gui=underline
+"hi Constant	guifg=#c4ffa0
+"hi Statement	guifg=#dede50 gui=none
+hi Statement	guifg=#cbcb6f gui=none
+hi Identifier	guifg=#57d2fb
+hi Underlined	guifg=#92acfc gui=underline
 
 " Popup menu
 hi Pmenu      guifg=#eeeeee guibg=#333e56
@@ -86,20 +87,21 @@ hi PmenuThumb guifg=#bdc3c7
 hi Pmenu      guifg=#eeeeee guibg=#4f5e81
 hi PmenuSel   guifg=#eeeeee guibg=#4f8159 blend=0
 
+" Misc for org file, text file etc
+hi Directory    guifg=#32dcdc
+"hi hyperlinkURL guifg=#90d56e
+
 " Highligts for fzf window
 hi FzfBg      guifg=#eeeeee guibg=#333e56
 hi FzfMatch   guifg=#77e70b gui=bold
 hi FzfCurline guifg=#cdcd0f guibg=#333e56
 
 " Customization JP
-"hi def link cCustomFunc  Function
-hi cCustomFunc guifg=#88b6df
-hi cDelimiter guifg=#00BFFF
-
-" jpOPer2 are | ] [ {
-hi jpOPer2 guifg=#D5C773
+"hi CustomFunc guifg=#88b6df
+hi Function guifg=#88b6df
 " cDelimiter are , ; : ?
-hi cDelimiter guifg=#00BFFF
+hi Delimiter guifg=#00bfff
+hi Operator  guifg=#dede50
 
 " See ~/.vim/after/syntax/cpp/c.vim, cpp.vim
 " Operators are defined there
