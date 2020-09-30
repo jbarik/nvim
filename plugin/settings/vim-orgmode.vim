@@ -10,4 +10,10 @@ let g:org_todo_keywords = [['TODO', 'DISCUSS', 'WAITING', '|', 'DONE'],
 " vim-orgmode uses
 let g:utl_cfg_hdl_scm_http_system = "silent !firefox -remote 'ping()' && firefox -remote 'openURL( %u )' || firefox '%u#%f' &"
 
+"let g:org_heading_highlight_colors = ['Title', 'Constant', 'Identifier',
+"                           \   'Statement', 'PreProc', 'Type', 'Special']
+"
+let g:org_heading_highlight_colors = ['OrgHeading1', 'OrgHeading2', 'OrgHeading3',
+                           \  'OrgHeading4', 'OrgHeading5', 'OrgHeading6', 'OrgHeading7']
+
 autocmd Filetype org setlocal tabstop=3 shiftwidth=3
