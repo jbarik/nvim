@@ -205,7 +205,8 @@ autocmd BufEnter,FocusGained * checktime
 let loaded_netrwPlugin = 1
 
 " Unless we disable mathematic, it overrides matlab files as mma
-let g:polyglot_disabled = ['mathematica']
+let g:polyglot_disabled = ['mathematica', 'octave', 'murphi', 'objc']
+"autocmd BufNewFile,BufRead *.m,*.mlx set syntax=matlab
 
 " nvim-lsp setting. The following line will source ./lua/lsp_init.lua
 let g:use_nvim_lsp = 0
