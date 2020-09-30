@@ -26,7 +26,7 @@ hi IncSearch	guifg=#b0ffff guibg=#2050d0
 hi MatchParen   guifg=#1e1e27 guibg=#5499C7 gui=bold
 
 hi SpecialKey	guifg=#32c6d8
-hi Title	guifg=#e692fc
+hi Title	guifg=#e692fc gui=nocombine
 hi WarningMsg	guifg=#eb3e6b
 hi WildMenu	guifg=#24272e guibg=#9fd6ff
 hi ModeMsg	guifg=#22cce2
@@ -93,7 +93,7 @@ hi Directory    guifg=#32dcdc
 
 " Highligts for fzf window
 hi FzfBg      guifg=#eeeeee guibg=#333e56
-hi FzfMatch   guifg=#77e70b gui=bold
+hi FzfMatch   guifg=#77e70b
 hi FzfCurline guifg=#cdcd0f guibg=#333e56
 
 " Customization JP
@@ -102,6 +102,14 @@ hi Function guifg=#88b6df
 " cDelimiter are , ; : ?
 hi Delimiter guifg=#00bfff
 hi Operator  guifg=#dede50
+
+hi OrgHeading1 guifg=#e692fc
+hi OrgHeading2 guifg=#abebc6
+hi OrgHeading3 guifg=#57d2fb
+hi OrgHeading4 guifg=#cbcb6f
+hi OrgHeading5 guifg=#F06292
+hi OrgHeading6 guifg=#90d56e
+hi OrgHeading7 guifg=#87CEEB
 
 " See ~/.vim/after/syntax/cpp/c.vim, cpp.vim
 " Operators are defined there
