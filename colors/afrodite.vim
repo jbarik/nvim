@@ -9,8 +9,8 @@ endif
 let colors_name = "afrodite"
 
 hi Normal   guifg=#c2c1c2 guibg=#24272e
-hi Error    guifg=#ea445d guibg=#24272e gui=bold,underline,italic
-hi ErrorMsg guifg=#ea445d guibg=#24272e gui=bold
+hi Error    guifg=#ea445d guibg=#24272e gui=underline,italic
+hi ErrorMsg guifg=#ea445d guibg=#24272e
 hi LineNr   guifg=#9696d2 guibg=#272c34
 
 " filler lines (~) after the last line in the buffer
@@ -31,7 +31,7 @@ hi WarningMsg	guifg=#eb3e6b
 hi WildMenu	guifg=#24272e guibg=#9fd6ff
 hi ModeMsg	guifg=#22cce2
 hi MoreMsg	guifg=#eb3e6b
-hi Question	guifg=#73d216 gui=bold
+hi Question	guifg=#73d216
 hi NonText	guifg=#0030ff
 hi VertSplit	guifg=#24272e guibg=#8066ff
 hi StatusLine	guifg=#5b5b5b guibg=#dad3a9
@@ -59,11 +59,11 @@ hi MBENormal guifg=#2ec4b6 guibg=#24272e
 
 " active - cursor is in this window
 hi MBEVisibleNormal        guifg=#2ddc2d guibg=#24272e gui=italic
-hi MBEVisibleActiveNormal  guifg=#2ddc2d guibg=#24272e gui=bold
+hi MBEVisibleActiveNormal  guifg=#2ddc2d guibg=#24272e
 
 hi MBEChanged               guifg=#db606b guibg=#24272e gui=italic
 hi MBEVisibleChanged        guifg=#db606b guibg=#24272e gui=italic
-hi MBEVisibleActiveChanged  guifg=#db606b guibg=#24272e gui=bold
+hi MBEVisibleActiveChanged  guifg=#db606b guibg=#24272e
 ""================ Buffer explorer settings end ================
 
 hi Type		guifg=#90d56e gui=none
@@ -104,12 +104,15 @@ hi Delimiter guifg=#00bfff
 hi Operator  guifg=#dede50
 
 hi OrgHeading1 guifg=#e692fc
-hi OrgHeading2 guifg=#abebc6
-hi OrgHeading3 guifg=#57d2fb
-hi OrgHeading4 guifg=#cbcb6f
+hi OrgHeading2 guifg=#64b5f6
+hi OrgHeading3 guifg=#cbcb6f
+hi OrgHeading4 guifg=#57d2fb
 hi OrgHeading5 guifg=#F06292
 hi OrgHeading6 guifg=#90d56e
 hi OrgHeading7 guifg=#87CEEB
+
+hi SneakFirstMatch guifg=#f9f8f9 guibg=#6fc860
+hi SneakSubsequentMatch guifg=#f9f8f9 guibg=#b960c8
 
 " See ~/.vim/after/syntax/cpp/c.vim, cpp.vim
 " Operators are defined there
