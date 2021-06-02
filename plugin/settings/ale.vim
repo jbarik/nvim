@@ -5,7 +5,7 @@ let g:ale_linters = {
 
 
 " Only run linters named in ale_linters settings.
-"let g:ale_linters_explicit = 1
+let g:ale_linters_explicit = 1
 let g:ale_pattern_options = {
 \   '.*\.cpp$': {'ale_enabled': 0},
 \   '.*\.cxx$': {'ale_enabled': 0},
@@ -13,6 +13,7 @@ let g:ale_pattern_options = {
 \   '.*\.hpp$': {'ale_enabled': 0},
 \   '.*\.h$': {'ale_enabled': 0},
 \   '.*\.m$': {'ale_enabled': 0},
+\   '.*\.py$': {'ale_enabled': 0},
 \}
 
 let g:ale_set_loclist = 0

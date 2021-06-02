@@ -1,5 +1,5 @@
 let g:fzf_preview_window = '' " Disable preview
-nmap <silent> <Space>sb :Buffer<CR>
+"nmap <silent> <Space>sb :Buffer<CR>
 "nmap <silent> <Space>h :History<CR> " By default history shows preview
 nmap <silent> <Space>sh :call fzf#vim#history({})<CR>
 nnoremap <silent> <Space>sf :Files <C-r>=expand("%:h")<CR>/<CR>
@@ -27,9 +27,12 @@ function AgSearchFile(...)
    end
    let l:search_exp = join(a:000[1:7], '.*')
 
-   call fzf#run(fzf#wrap({'source':'ag --nogroup --column --color -g' .l:search_exp. ' ' .a:1,
+   call fzf#run(fzf#wrap({'source':'ag --nogroup --column -g' .l:search_exp. ' ' .a:1,
          \                        'sink':'e',
-         \                        'options':['--ansi', '--multi', '--color', 'hl:4,hl+:12']}))
+         \                        'options':['--ansi', '--multi']}))
+   "call fzf#run(fzf#wrap({'source':'ag --nogroup --column --color -g' .l:search_exp. ' ' .a:1,
+   "      \                        'sink':'e',
+   "      \                        'options':['--ansi', '--multi', '--color', 'hl:4,hl+:12']}))
 endfunction
 
 nmap <Space>sa :SearchFile matlab/src
@@ -75,7 +78,7 @@ let g:fzf_colors =
 "========================================================================
 function TriggerFileSearch(selectedLine)
    call fzf#vim#files(a:selectedLine)
-   call feedkeys('i', 'n')
+   "call feedkeys('i', 'n')
 endfunction
 
 function! DirSearch(...)

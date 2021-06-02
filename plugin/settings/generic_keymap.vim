@@ -10,27 +10,31 @@ nm <Leader>eg :e ~/.gdbinit<CR>
 nm <Space>v <C-V>
 nm <Space>n :nohls<CR>
 
-" paste from primary/system clipboard
-nm <Space>p "*p
-
 nm <Space>fn :call ShowFuncName()<CR>
 nm <silent> <Leader>n  :call ToggleRelativeNumber()<CR>
 nm <silent> <Leader>cc :call ToggleColorColumn()<CR>
 nn <silent> <leader>cl :set cuc!<Bar>set cursorline!<CR>
 
+" * is primary i.e. middle-mouse-button-click
+" + is clipboard
 " copy current file full path
-nn <Space>cf :let @*=expand("%:p")<CR>
+nn <Space>cf :let @*=expand("%:p") <bar> let @+=@*<CR>
 " copy current file name, t for tail
-nn <Space>ct :let @*=expand("%:t")<CR>
+nn <Space>ct :let @*=expand("%:t") <bar> let @+=@*<CR>
 " copy current file relative path
-nn <Space>cr :let @*=expand("%")<CR>
+"nn <Space>cr :let @*=expand("%") <bar> let @+=@*<CR>
+nn <Space>cr :let @*=fnamemodify(expand("%"),":.") <bar> let @+=@*<CR>
 " copy current file's directory name, h for head
-nn <Space>cd :let @*=expand("%:p:h")<CR>
+nn <Space>cd :let @*=expand("%:p:h") <bar> let @+=@*<CR>
+
+" paste from primary(middle click)
+nm <Space>p "*p
 
 " Copy the finename:line_no to system clipboard
 " Helpful to use it in gdb - for breakpoints
 " See http://vim.wikia.com/wiki/Get_the_name_of_the_current_file
-nn <Space>cn :let @*='b ' . expand("%:t") . ':' . line(".")<CR>
+"nn <Space>cn :let @*='b ' . expand("%:t") . ':' . line(".") <bar> let @+=@*<CR>
+nn <Space>cn :let @*='b ' . expand("%") . ':' . line(".") <bar> let @+=@*<CR>
 
 " Windows navigation
 nn <Leader>j <C-W>j

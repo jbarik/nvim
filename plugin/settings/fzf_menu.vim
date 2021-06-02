@@ -7,8 +7,9 @@ let s:text_dict = {
          \'5.  Callstack: Shorten export paths'      : '%s/\(at \)\(\/.*\)\(\/matlab\/.*\)/\1\3/',
          \'6.  Callstack: Remove fcn arguments '     : '%s/\/.*\(\/matlab\/\)\(.*(.*\)/\/\.\*\1\2/g',
          \'7.  Block name: Replace new line with \n' : '%s/\(BLOCK_NAME: "[^"]* *\)\n/\1\\n/<bar>:%s/\(\n\n\)\n\+/\1/g',
-         \'8.  Replace character \n with new line'   : '%s/\\n/\r/g',
-         \'9.  Remove trailing white space'          : '%s/\s\+$//'
+         \'8.  Block name: Replace new line - old'   : '%s/\(BLOCK_NAME: "[^"]* *\)\n/\1\\n/g',
+         \'9.  Replace character \n with new line'   : '%s/\\n/\r/g',
+         \'10. Remove trailing white space'          : '%s/\s\+$//'
          \}
 
 let s:ccls_dict = {
@@ -59,22 +60,22 @@ function TriggerSubmenu(sm)
    if (strpart(a:sm[0],0,2) == '1.')
       let l:source = keys(s:text_dict)
       call fzf#run(fzf#wrap({'source': l:source, 'sink*': function('HandleTextPruneSubmenu')}))
-      call feedkeys('i', 'n')
+      "call feedkeys('i', 'n')
 
    elseif (strpart(a:sm[0], 0,2) == '2.')
       let l:source = keys(s:ccls_dict)
       call fzf#run(fzf#wrap({'source': reverse(l:source), 'sink*': function('HandleCclsSubmenu')}))
-      call feedkeys('i', 'n')
+      "call feedkeys('i', 'n')
 
    elseif (strpart(a:sm[0],0,2) == '3.')
       let l:source = keys(s:config_dict)
       call fzf#run(fzf#wrap({'source': reverse(l:source), 'sink*': function('HandleConfigSubmenu')}))
-      call feedkeys('i', 'n')
+      "call feedkeys('i', 'n')
 
    elseif (strpart(a:sm[0],0,2) == '4.')
       let l:source = keys(s:ycm_dict)
       call fzf#run(fzf#wrap({'source': reverse(l:source), 'sink*': function('HandleYcmSubmenu')}))
-      call feedkeys('i', 'n')
+      "call feedkeys('i', 'n')
    endif
 
    "let l:source = 'Submenu for:' .l:submenu_id

@@ -1,1 +1,1 @@
-nmap <silent> <Leader>z :ZoomWinTabToggle<CR>
+nmap <silent> <Space>z :ZoomWinTabToggle<CR>

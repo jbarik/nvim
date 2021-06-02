@@ -4,13 +4,14 @@ if s:ccls_enabled
    let g:ycm_filetype_blacklist = {'cpp': 1, 'c':1}
 else
    echo "Turning on ycm with clangd"
+   let g:ycm_filetype_whitelist = {'python' : 1, 'cpp': 1, 'c':1}
    let g:ycm_use_clangd = 1
-
+   let g:ycm_use_ultisnips_completer = 0
    let g:ycm_confirm_extra_conf = 1
    let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf_mw.py'
    let g:ycm_complete_in_comments_and_strings = 1
 
-   let g:ycm_filetype_whitelist = {'cpp':1, 'c':1, 'python' : 1}
+   "let g:ycm_filetype_whitelist = {'cpp':1, 'c':1, 'python' : 1}
    " With the following setting YCM always populates vim location list
    " with diagnostic data, and one can jump with :lnext :lprevious
    " short is :lne :lp
@@ -57,23 +58,3 @@ command YcmGetDocFloatWin :call <SID>Hover()
 " let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1, 'python' : 1, 'text' : 1}
 " let g:ycm_filetype_blacklist = {'tagbar': 1}
 "
-" if isdirectory(working_dir . '/.sbtools/sbcpptags/ccls')
-"    echo "Turning on ycm with ccls"
-"    let g:ycm_use_clangd = 0
-"    let s:ccls_args =  '--init={"cache":{"directory":"' . working_dir. '/..sbtools/sbcpptags/ccls"},'
-"             \ . '"clang":{"pathMappings":["/local-ssd/jbarik/.Bmasklib.latest_pass.sbsyncmaster.inprogress/>'
-"             \ . working_dir. '/","/local-ssd/jbarik/.Bmasklib.latest_pass.sbsyncmaster/>'
-"             \ . working_dir. '/","/local-ssd/jbarik/Bmasklib.latest_pass/>' . working_dir . '/"]},'
-"             \ . '"compilationDatabaseDirectory":"' . working_dir . '/.sbtools/sbcpptags",'
-"             \ . '"index":{"threads":12,"trackDependency":0}, "completion": {"detailedLabel":false}}'
-"
-"    let g:ycm_language_server =
-"             \ [{
-"             \   'name': 'ccls',
-"             \   'cmdline': [ 'ccls', s:ccls_args ],
-"             \   'filetypes': [ 'c', 'cpp', 'cuda', 'objc', 'objcpp' ]
-"             \ }]
-" else
-"    echo "Turning on ycm with clangd"
-"    let g:ycm_use_clangd = 1
-" end

@@ -5,7 +5,7 @@ function! g:ToggleColorColumn()
     if &colorcolumn !=''
         set colorcolumn&
     else
-        set colorcolumn=85
+        set colorcolumn=100
     endif
 endfunction
 

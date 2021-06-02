@@ -10,7 +10,8 @@ let g:vista_default_executive = 'ctags'
 
 " Set the executive for some filetypes explicitly. Use the explicit executive
 " instead of the default one for these filetypes when using `:Vista` without
-" specifying the executive.
+" specifying the executive. (for vim-lsp value is vim_lsp, for inbuilt lsp
+" value is nvim_lsp)
 let g:vista_executive_for = {
   \ 'cpp': 'vim_lsp'
   \ }
@@ -32,7 +33,7 @@ let g:vista#renderer#enable_icon = 1
 " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
 " function u2131 - ℱ, variable u58 - X u03f0 ϰ, namespace u26c1 ⛁, u26c3 ⛃
 " u26c0 ⛀ ⛂, (method u24d5 ⓕ) (constructor u1455 ᑕ ) (u003f ?) (enum u24ba Ⓔ )
-" default u003f ? u2370 ⍰  u+24B8 Ⓒ  
+" default u003f ? u2370 ⍰  u+24B8 Ⓒ
 " see /home/jbarik/.config/nvim/plugged/vista.vim/autoload/vista/renderer.vim
 let g:vista#renderer#icons = {
 \   "function": "\u2131",
