@@ -1,14 +1,25 @@
+" neovim's checkhealth complains about multiple python executables
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
+" Unless we disable mathematic, it overrides matlab files as mma
+let g:polyglot_disabled = ['mathematica', 'octave', 'murphi', 'objc']
+let g:filetype_m = 'matlab'
+
 filetype plugin indent on
 set termguicolors
 set mouse=a
 " unnamed - PRIMARY(vim calls "*) - select to copy middle mouse button press to paste
 " unnamedplus - CLIPBOARD(vim cals it "+) - Ctrl+c, Ctrl+v
 set clipboard=unnamed,unnamedplus
+" see haya14busa/vim-poweryank plugin for tmux+vim fix
 "set clipboard+=unnamedplus
 "Don't jump to newline after column 80
 "set textwidth=0 "autocmd FileType vim set textwidth=0
 
 let mapleader=","
+
+" Simulink uses @ in dir/file name
+set isfname+=@-@
 
 "================= Python Code ===============================================
 
@@ -45,7 +56,8 @@ set showbreak=↪ " ↳ Type: insertmode ctrl+v u21B3 ⇶  ℱ X
 " ================ Indention =================================================
 set softtabstop=3 " Make Vim treat <Tab> key as 3 spaces, but respect hard Tabs.
 set shiftwidth=3
-set cindent
+set cino+=(0
+"set cindent
 set expandtab     " Turn Tab keypresses into spaces. You can still insert
                   " real Tabs as [Ctrl]-V [Tab]
 
@@ -88,15 +100,18 @@ set nofoldenable " disable folds
 "  2nd   val is the dir of the current file
 set path=,,.,/usr/include
 
+" https://github.com/kristijanhusak/vim-packager
 " Load packager only when you need it
+"
+" To update selected packages
+" PackagerUpdate {'plugins': ['fzf.vim', 'vim-packager']}
 function! PackagerInit() abort
    packadd vim-packager
    call packager#init()
 
    call packager#add('junegunn/vim-easy-align')
-   "call packager#add('easymotion/vim-easymotion')
    call packager#add('justinmk/vim-sneak')
-   "call packager#add('justinmk/vim-gtfo')
+   call packager#add('justinmk/vim-gtfo')
    call packager#add('tpope/vim-obsession')
    call packager#add('tpope/vim-surround')
    call packager#add('fholgado/minibufexpl.vim')
@@ -112,45 +127,47 @@ function! PackagerInit() abort
    call packager#add('nfvs/vim-perforce')
    "Plug 'rhysd/git-messenger.vim'
 
-   call packager#add('w0rp/ale')
-   call packager#add('m-pilia/vim-ccls')
    " This is for code snippets, header guard
    call packager#add('mbbill/code_complete')
    call packager#add('sheerun/vim-polyglot')
    call packager#add('bfrg/vim-cpp-modern')
-   call packager#add('ycm-core/YouCompleteMe')
-   call packager#add('prabirshrestha/vim-lsp')
-   call packager#add('prabirshrestha/async.vim')
-   call packager#add('liuchengxu/vista.vim')
 
-   call packager#add('neovim/nvim-lsp')
-   "call packager#add('nvim-lua/diagnostic-nvim')
+   " LSP setup. The following pages can help
+   " https://github.com/aktau/dotfiles/blob/master/.vimrc
+   "  - www.reddit.com/r/neovim/comments/gxcbui/in_built_lsp_is_amazing/
+   "  - www.reddit.com/r/neovim/comments/h0ndj0/to_those_who_have_integrated_lsp_functionality
+   "  - www.reddit.com/r/neovim/comments/gy8ko7/question_how_to_get_more_readable_error_messages
+   "  - www.reddit.com/r/neovim/comments/hba6yb/coc_neovim_lua_completion_source
+   call packager#add('prabirshrestha/vim-lsp')
+   "call packager#add('prabirshrestha/async.vim')
+
+   " Latest YCM uses(clngd) glibcxx version *.26. Our machine doesn't have that
+   call packager#add('ycm-core/YouCompleteMe', {'commit': '7c4d05375a09a871f618f9688c7af517d4e69b76'})
+   call packager#add('m-pilia/vim-ccls')
+   call packager#add('liuchengxu/vista.vim')
+   call packager#add('neovim/nvim-lspconfig')
+   call packager#add('hrsh7th/nvim-compe')
+   call packager#add('SirVer/ultisnips')
+   "call packager#add('glepnir/lspsaga.nvim')
    "call packager#add('nvim-lua/completion-nvim')
+   "call packager#add('nvim-lua/diagnostic-nvim')
    "call packager#add('steelsojka/completion-buffers')
    "call packager#add('nvim-treesitter/nvim-treesitter')
    "call packager#add('nvim-treesitter/completion-treesitter')
+   "call packager#add('nvim-lua/lsp-status.nvim')
 
-   call packager#add('ncm2/ncm2')
-   call packager#add('roxma/nvim-yarp')
-   call packager#add('ncm2/ncm2-vim-lsp')
-   call packager#add('ncm2/float-preview.nvim')
-   call packager#add('ncm2/ncm2-path')
-   call packager#add('ncm2/ncm2-bufword')
-   call packager#add('fgrsnau/ncm2-otherbuf')
    call packager#add('junegunn/fzf', {'do': './install --all && ln -s $(pwd) ~/.fzf'})
    call packager#add('junegunn/fzf.vim')
 
-   "call packager#add('kyazdani42/nvim-web-devicons') " for file icons
-   "call packager#add('kyazdani42/nvim-tree.lua')
+   call packager#add('nvim-lua/popup.nvim')
+   call packager#add('nvim-lua/plenary.nvim')
+   call packager#add('nvim-telescope/telescope.nvim')
+
+   call packager#add('justinmk/vim-gtfo')
    call packager#add('justinmk/vim-dirvish')
    call packager#add('roginfarrer/vim-dirvish-dovish')
-
    call packager#add('vim-scripts/DrawIt')
-   " Zoom in/out
    call packager#add('troydm/zoomwintab.vim')
-   "call packager#add('danro/rename.vim')
-   "Plug 'prabirshrestha/asyncomplete.vim'
-   "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 endfunction
 
 command! PackagerInstall call PackagerInit() | call packager#install()
@@ -158,6 +175,12 @@ command! -bang PackagerUpdate call PackagerInit() | call packager#update({ 'forc
 command! PackagerClean call PackagerInit() | call packager#clean()
 command! PackagerStatus call PackagerInit() | call packager#status()
 
+" With this command, when the completion window is visible, the tab key
+" (default) will select the next candidate in the window. In vim, this also
+" changes the typed-in text to that of the candidate completion.
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" This selects the previous candidate for shift-tab (default)
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "When the <Enter> key is pressed while the popup menu is visible, it only
 "hides the menu. Use this mapping to close the menu and also start a new
 "line.
@@ -201,16 +224,42 @@ augroup END
 " Check and update if file has changed outsite vim
 autocmd BufEnter,FocusGained * checktime
 
+"set verbosefile=vimlog.txt
+
+" autocmd Filetype txt setlocal concealcursor=nc conceallevel=2
+
+" "========================================================
+" " copy to attached terminal using the yank(1) script:
+" " https://github.com/sunaku/home/blob/master/bin/yank
+" function! Yank(text) abort
+"   let escape = system('yank', a:text)
+"   if v:shell_error
+"     echoerr escape
+"   else
+"     call writefile([escape], '/dev/tty', 'b')
+"   endif
+" endfunction
+"
+" " automatically run yank(1) whenever yanking in Vim
+" " (this snippet was contributed by Larry Sanderson)
+" function! CopyYank() abort
+"   call Yank(join(v:event.regcontents, "\n"))
+" endfunction
+" autocmd TextYankPost * call CopyYank()
+" "========================================================
+
 " Don't load netrw
 let loaded_netrwPlugin = 1
 
-" Unless we disable mathematic, it overrides matlab files as mma
-let g:polyglot_disabled = ['mathematica', 'octave', 'murphi', 'objc']
-"autocmd BufNewFile,BufRead *.m,*.mlx set syntax=matlab
+"" Setting required for /home/jbarik/.config/nvim/pack/packager/start/vim-orgmode/syntax/org.vim
+"" Hyperlinks: {{{1
+"syntax match hyperlink	"\[\{2}[^][]*\(\]\[[^][]*\)\?\]\{2}" contains=hyperlinkBracketsLeft,hyperlinkURL,hyperlinkBracketsRight containedin=org_heading1,org_heading2,org_heading3,org_heading4,org_heading4,org_heading5,org_heading6,org_heading7,org_list_item
 
 " nvim-lsp setting. The following line will source ./lua/lsp_init.lua
 let g:use_nvim_lsp = 0
-lua require 'lsp_init'
+if g:use_nvim_lsp == 1
+   lua require 'lsp_init'
+end
 
 "https://jeffkreeftmeijer.com/vim-16-color/
 " Normal - Black  0   Bright - Black   8
