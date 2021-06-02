@@ -11,6 +11,7 @@ syn match matlabOperator "(\|)"
 syn match matlabOperator /\[/
 syn match matlabOperator /\]/
 syn match matlabOperator "{\|}"
+syn match matlabOperator ",\|;\|:"
 syn match matlabLineContinuation "\.\{3}"
 
 " Standard numbers
@@ -110,27 +111,27 @@ syn keyword matlabInbuiltFunc cdfepoch cdfinfo cdfread cdfwrite todatenum fitsin
 
 " Define the default highlighting.
 syn keyword matlabQualifier Static Access
-syn match matlabDelimiter     ",\|;\|:"
+"syn match matlabDelimiter     ",\|;\|:"
 syn match matlabInbuiltFunctionCall  "\w\+\s*(\@="
 
-hi def link Delimiter                 matlabDelimiter
+"hi def link Delimiter                 matlabDelimiter
 hi def link matlabQualifier           StorageClass
 hi def link matlabInbuiltFunctionCall Function
 
-hi def link matlabTransposeOperator matlabOperator
-hi def link matlabLineContinuation  Delimiter
-hi def link matlabTodo		    Todo
-hi def link matlabString            String
-hi def link matlabDelimiter	    Identifier
-hi def link matlabTransposeOther    Identifier
-hi def link matlabNumber	    Number
-hi def link matlabFloat		    Float
-hi def link matlabConstant	    Constant
-hi def link matlabStatement	    Statement
-hi def link matlabComment	    Comment
-hi def link matlabBlockComment	    Comment
+hi def link matlabTodo		          Todo
+hi def link matlabFloat		          Float
 hi def link matlabScope	            StorageClass
+hi def link matlabString            String
+hi def link matlabNumber	          Number
+hi def link matlabComment	          Comment
+hi def link matlabOperator          Operator
+hi def link matlabConstant	        Constant
+hi def link matlabStatement	        Statement
+hi def link matlabDelimiter	        Operator
+hi def link matlabInbuiltFunc       Identifier
+hi def link matlabBlockComment	    Comment
+hi def link matlabTransposeOther    Identifier
+hi def link matlabLineContinuation  Delimiter
+hi def link matlabTransposeOperator matlabOperator
 
-hi def link matlabOperator    Operator
-hi def link matlabInbuiltFunc Identifier
 
