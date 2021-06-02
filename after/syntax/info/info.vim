@@ -45,17 +45,22 @@ syn match txtNumber '\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+'
 
 " Hexadecimal number
 syn match txtNumber '0[xX][0-9a-fA-F]*'
-hi txtNumber guifg=#ff1493 guibg=#2e2e2e
-hi txtNumber guifg=#ff54b0 guibg=#2e2e2e
+hi txtNumber guifg=#ff54b0
+hi txtNumber guifg=#AF7AC5
+hi txtNumber guifg=#DC80F4
 
 syntax region infoString start=/\v"/ skip=/\v(\\[\\"]){-1}/ end=/\v"/
 syntax region infoString start=/\v'/ end=/\v'/
-hi infoString guifg=#7fff00 guibg=#2e2e2e
-hi infoString guifg=#1fdd3f guibg=#2e2e2e
+hi infoString guifg=#90D56E
 
-highlight infoIdentifier gui=underline guifg=#5c96ff
+"highlight infoIdentifier gui=underline guifg=#77b5fe
+highlight infoIdentifier guifg=#77b5fe
+syn match infoIdentifier 'SUBSYS_GRAPH_PTR:'
 syn match infoIdentifier 'TYPE_STRING:'
 syn match infoIdentifier 'BLOCK_NAME:'
 syn match infoIdentifier 'POINTER:'
+syn match infoIdentifier 'SID:'
+syn match infoIdentifier 'START:'
+syn match infoIdentifier 'END:'
 
 let b:current_syntax = "info"
