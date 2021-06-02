@@ -18,21 +18,22 @@ hi EndOfBuffer guifg=#272c34 guibg=#272c34
 
 " Visual block
 "hi Visual       gui=none   guifg=#eeeeee   guibg=#4e4e8f
-hi Visual       guibg=#1063A6
+hi Todo		    guifg=#fc6a7f guibg=#24272e gui=bold
+hi Visual     guibg=#1063A6
 hi VisualNOS	guifg=#8080ff guibg=fg	gui=reverse,underline
-hi Todo		guifg=#fc6a7f guibg=#24272e gui=bold
-hi Search       guibg=#0097a7
+hi Search     guibg=#0097a7
 hi IncSearch	guifg=#b0ffff guibg=#2050d0
-hi MatchParen   guifg=#1e1e27 guibg=#5499C7 gui=bold
+hi MatchParen guifg=#1e1e27 guibg=#5499C7 gui=bold
 
+"hi Title	    guifg=#e692fc gui=nocombine
+hi Title	    guifg=#e692fc gui=NONE
 hi SpecialKey	guifg=#32c6d8
-hi Title	guifg=#e692fc gui=nocombine
 hi WarningMsg	guifg=#eb3e6b
-hi WildMenu	guifg=#24272e guibg=#9fd6ff
-hi ModeMsg	guifg=#22cce2
-hi MoreMsg	guifg=#eb3e6b
-hi Question	guifg=#73d216
-hi NonText	guifg=#0030ff
+hi WildMenu	  guifg=#24272e guibg=#9fd6ff
+hi ModeMsg	  guifg=#22cce2
+hi MoreMsg	  guifg=#eb3e6b
+hi Question	  guifg=#73d216
+hi NonText	  guifg=#0030ff
 hi VertSplit	guifg=#24272e guibg=#8066ff
 hi StatusLine	guifg=#5b5b5b guibg=#dad3a9
 hi StatusLineNC	guifg=black guibg=darkgray
@@ -99,20 +100,26 @@ hi FzfCurline guifg=#cdcd0f guibg=#333e56
 " Customization JP
 "hi CustomFunc guifg=#88b6df
 hi Function guifg=#88b6df
+hi Function guifg=#90b4d4
 " cDelimiter are , ; : ?
 hi Delimiter guifg=#00bfff
 hi Operator  guifg=#dede50
+hi Operator  guifg=#c0c06e
 
 hi OrgHeading1 guifg=#e692fc
 hi OrgHeading2 guifg=#64b5f6
 hi OrgHeading3 guifg=#cbcb6f
-hi OrgHeading4 guifg=#57d2fb
+hi OrgHeading4 guifg=#90d56e
 hi OrgHeading5 guifg=#F06292
-hi OrgHeading6 guifg=#90d56e
+hi OrgHeading6 guifg=#57d2fb
 hi OrgHeading7 guifg=#87CEEB
 
 hi SneakFirstMatch guifg=#f9f8f9 guibg=#6fc860
 hi SneakSubsequentMatch guifg=#f9f8f9 guibg=#b960c8
+
+hi LspError guifg=#ea445d
+hi LspWarn  guifg=#cbcb6f 
+hi LspHint  guifg=#56b6c2
 
 " See ~/.vim/after/syntax/cpp/c.vim, cpp.vim
 " Operators are defined there
