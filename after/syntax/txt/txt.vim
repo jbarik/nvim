@@ -41,7 +41,7 @@ syn match txtString "[[:alpha:]]" contains=txtOperator
 syn match txtNumber '\d\+'
 syn match txtNumber '[-+]\d\+'
 
-" Floating point number with decimal no E or e 
+" Floating point number with decimal no E or e
 syn match txtNumber '[-+]\d\+\.\d*'
 
 " Floating point like number with E and no decimal point (+,-)
@@ -51,6 +51,8 @@ syn match txtNumber '\d[[:digit:]]*[eE][\-+]\=\d\+'
 " Floating point like number with E and decimal point (+,-)
 syn match txtNumber '[-+]\=\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+'
 syn match txtNumber '\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+'
+" Hexadecimal number
+syn match txtNumber '0[xX][0-9a-fA-F]*'
 
 " Cites
 syn region txtCite matchgroup=txtOperator start="\"" end="\"" contains=@txtContains,@txtAlwaysContains
@@ -72,7 +74,7 @@ syn region txtComments start="\/\*" end="\*\/" contains=@txtAlwaysContains
 
 syn region txtDelims matchgroup=txtOperator start="<"  end=">"  contains=@txtContains,@txtAlwaysContains oneline
 syn region txtDelims matchgroup=txtOperator start="{"  end="}"  contains=@txtContains,@txtAlwaysContains oneline
-syn region txtDelims matchgroup=txtOperator start="\[" end="\]" contains=@txtContains,@txtAlwaysContains oneline 
+syn region txtDelims matchgroup=txtOperator start="\[" end="\]" contains=@txtContains,@txtAlwaysContains oneline
 
 syn match txtLink "\(http\|https\|ftp\)\(\w\|[\-&=,?\:\.\/]\)*" contains=txtOperator
 
@@ -91,6 +93,13 @@ syn keyword txtError error: bug:
 syn keyword txtDebug debug:
 syn case match
 
+
+syn match orgHyperlink "\[\[.*\]\[.*\]" contains=orgHyperlinkLeftBrackets,orgHyperlinkURL,orgHyperlinkRightBrackets containedin=ALL 
+syn match orgHyperlinkURL contained "[^][]*\]\[" conceal
+syn match orgHyperlinkLeftBrackets  contained "\[\[" conceal
+syn match orgHyperlinkRightBrackets contained "\]\]" conceal
+hi def link orgHyperlink Underlined
+
 command -nargs=+ HiLink hi def link <args>
 
 "" Additionals stuff start
@@ -99,13 +108,14 @@ syntax match txtWindowsPath /\k\@<![A-Za-z]:\S\+\([\\/]\|[^ [:punct:]]\)/
 HiLink txtUnixPath Directory
 HiLink txtWindowsPath Directory
 
-highlight txtURL gui=underline guifg=#5c96ff
+highlight txtURL gui=underline guifg=#c9c9ff
 syntax match txtURL @\<www\.\(\S*\w\)\+/\?@
 syntax match txtEmailAddr /\<\w[^@ \t\r]*\w@\w[^@ \t\r]\+\w\>/
 HiLink txtEmailAddr txtURL
-"" Additionals stuff end 
+"" Additionals stuff end
 
-HiLink txtNumber      Number
+"HiLink txtNumber      Number
+HiLink txtNumber      Constant
 HiLink txtString      Normal
 HiLink txtOperator    Operator
 HiLink txtCite        String
