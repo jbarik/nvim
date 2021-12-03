@@ -8,6 +8,10 @@ let g:filetype_m = 'matlab'
 filetype plugin indent on
 set termguicolors
 set mouse=a
+set nu            " Line numbers should be shown
+set ruler         " Show line number and col number of cursor
+set showbreak=↪   " ↳ Type: insertmode ctrl+v u21B3 ⇶  ℱ X
+set encoding=utf8 " To show glyphs
 " unnamed - PRIMARY(vim calls "*) - select to copy middle mouse button press to paste
 " unnamedplus - CLIPBOARD(vim cals it "+) - Ctrl+c, Ctrl+v
 set clipboard=unnamed,unnamedplus
@@ -17,46 +21,17 @@ set clipboard=unnamed,unnamedplus
 "set textwidth=0 "autocmd FileType vim set textwidth=0
 
 let mapleader=","
-
 " Simulink uses @ in dir/file name
 set isfname+=@-@
-
-"================= Python Code ===============================================
-
-python3 << EOF
-import os, re, vim
-#working_dir = "/local-ssd/jbarik/Bmasklib.latest_pass/";
-#base_dir = "Bmasklib.latest_pass";
-working_dir = os.getcwd();
-base_dir = os.path.basename(os.path.normpath((working_dir)));
-
-re_expression = r"(/.*)(/matlab/+.*)";
-p = re.compile(re_expression);
-m = p.match(working_dir);
-if m is not None:
-   working_dir = m.group(1);
-   base_dir = os.path.basename(os.path.normpath(m.group(1)));
-
-vim.command("let base_dir = '%s'"% base_dir);
-vim.command("let working_dir = '%s'"% working_dir);
-#print("Base directory is:", base_dir);
-#print("Working directory is:", working_dir);
-
-EOF
-
-"=============================================================================
-
-" To show glyphs
-set encoding=utf8
-
-set nu          " Line numbers should be shown
-set ruler       " Show line number and col number of cursor
-set showbreak=↪ " ↳ Type: insertmode ctrl+v u21B3 ⇶  ℱ X
+" I use = to surround file-paths in org files
+set isfname-==
 
 " ================ Indention =================================================
 set softtabstop=3 " Make Vim treat <Tab> key as 3 spaces, but respect hard Tabs.
 set shiftwidth=3
-set cino+=(0
+
+" :help cinoptions-values N-s no indent inside namespaces
+set cino+=(0,W3,N-s
 "set cindent
 set expandtab     " Turn Tab keypresses into spaces. You can still insert
                   " real Tabs as [Ctrl]-V [Tab]
@@ -78,20 +53,6 @@ set pumblend=15
 " Make the selected item completely opaque. See the colorschem file
 "hi PmenuSel blend=0
 
-" ================ Completion ================================================
-"set completeopt=menu,menuone,longest,preview
-"set completeopt=menu,menuone,longest,previewpopup
-set completeopt=noinsert,menuone,noselect
-
-" wildmode list::longest,full expands the suggestions in
-" command line
-set wildmode=list:longest,full
-set wildmenu
-
-" Makes floating PopUpMenu for completing stuff on the command line.
-"     Very similar to completing in insert mode.
-"set wildoptions+=pum
-
 " ================ Fold ======================================================
 set nofoldenable " disable folds
 
@@ -100,11 +61,33 @@ set nofoldenable " disable folds
 "  2nd   val is the dir of the current file
 set path=,,.,/usr/include
 
+"================= Python Code ===============================================
+python3 << EOF
+import os, re, vim
+working_dir = os.getcwd();
+base_dir = os.path.basename(os.path.normpath((working_dir)));
+
+re_expression = r"(/.*)(/matlab/+.*)";
+p = re.compile(re_expression);
+m = p.match(working_dir);
+if m is not None:
+   working_dir = m.group(1);
+   base_dir = os.path.basename(os.path.normpath(m.group(1)));
+
+vim.command("let base_dir = '%s'"% base_dir);
+vim.command("let working_dir = '%s'"% working_dir);
+#print("Base directory is:", base_dir);
+#print("Working directory is:", working_dir);
+
+EOF
+"=============================================================================
+
 " https://github.com/kristijanhusak/vim-packager
 " Load packager only when you need it
 "
 " To update selected packages
 " PackagerUpdate {'plugins': ['fzf.vim', 'vim-packager']}
+" To use a particular branch call packager#add('xxx', {'branch': 'tree-sitter'})
 function! PackagerInit() abort
    packadd vim-packager
    call packager#init()
@@ -116,16 +99,15 @@ function! PackagerInit() abort
    call packager#add('tpope/vim-surround')
    call packager#add('fholgado/minibufexpl.vim')
 
-   call packager#add('jceb/vim-orgmode')
-   call packager#add('tpope/vim-speeddating')
-   call packager#add('vim-scripts/utl.vim')
-   call packager#add('inkarkat/vim-SyntaxRange')
+   call packager#add('nvim-treesitter/nvim-treesitter')
+   call packager#add('lukas-reineke/headlines.nvim')
+   call packager#add('kristijanhusak/orgmode.nvim')
+   call packager#add('akinsho/org-bullets.nvim')
+   call packager#add('jubnzv/mdeval.nvim')
 
-   " See https://github.com/rbong/vim-crystalline
-   call packager#add('itchyny/lightline.vim')
-   call packager#add('maximbaz/lightline-trailing-whitespace')
+   call packager#add('nvim-lualine/lualine.nvim')
+   call packager#add('kyazdani42/nvim-web-devicons')
    call packager#add('nfvs/vim-perforce')
-   "Plug 'rhysd/git-messenger.vim'
 
    " This is for code snippets, header guard
    call packager#add('mbbill/code_complete')
@@ -139,29 +121,38 @@ function! PackagerInit() abort
    "  - www.reddit.com/r/neovim/comments/gy8ko7/question_how_to_get_more_readable_error_messages
    "  - www.reddit.com/r/neovim/comments/hba6yb/coc_neovim_lua_completion_source
    call packager#add('prabirshrestha/vim-lsp')
-   "call packager#add('prabirshrestha/async.vim')
 
-   " Latest YCM uses(clngd) glibcxx version *.26. Our machine doesn't have that
+   " Latest YCM uses(clangd) glibcxx version *.26. Our machine doesn't have that
+   " strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
    call packager#add('ycm-core/YouCompleteMe', {'commit': '7c4d05375a09a871f618f9688c7af517d4e69b76'})
    call packager#add('m-pilia/vim-ccls')
    call packager#add('liuchengxu/vista.vim')
    call packager#add('neovim/nvim-lspconfig')
-   call packager#add('hrsh7th/nvim-compe')
-   call packager#add('SirVer/ultisnips')
+   call packager#add('williamboman/nvim-lsp-installer')
+
+   call packager#add('hrsh7th/nvim-cmp')
+   call packager#add('hrsh7th/cmp-nvim-lsp')
+   call packager#add('hrsh7th/cmp-buffer')
+   call packager#add('hrsh7th/cmp-path')
+   call packager#add('hrsh7th/cmp-nvim-lua')
+   call packager#add('hrsh7th/cmp-calc')
+   call packager#add('dmitmel/cmp-vim-lsp')
+   call packager#add('ray-x/lsp_signature.nvim')
+
    "call packager#add('glepnir/lspsaga.nvim')
-   "call packager#add('nvim-lua/completion-nvim')
    "call packager#add('nvim-lua/diagnostic-nvim')
-   "call packager#add('steelsojka/completion-buffers')
    "call packager#add('nvim-treesitter/nvim-treesitter')
    "call packager#add('nvim-treesitter/completion-treesitter')
    "call packager#add('nvim-lua/lsp-status.nvim')
 
    call packager#add('junegunn/fzf', {'do': './install --all && ln -s $(pwd) ~/.fzf'})
    call packager#add('junegunn/fzf.vim')
+   call packager#add('gfanto/fzf-lsp.nvim')
 
-   call packager#add('nvim-lua/popup.nvim')
-   call packager#add('nvim-lua/plenary.nvim')
-   call packager#add('nvim-telescope/telescope.nvim')
+   "call packager#add('nvim-lua/popup.nvim')
+   "call packager#add('nvim-lua/plenary.nvim')
+   "call packager#add('nvim-telescope/telescope.nvim')
+   "call packager#add('camspiers/snap')
 
    call packager#add('justinmk/vim-gtfo')
    call packager#add('justinmk/vim-dirvish')
@@ -175,18 +166,8 @@ command! -bang PackagerUpdate call PackagerInit() | call packager#update({ 'forc
 command! PackagerClean call PackagerInit() | call packager#clean()
 command! PackagerStatus call PackagerInit() | call packager#status()
 
-" With this command, when the completion window is visible, the tab key
-" (default) will select the next candidate in the window. In vim, this also
-" changes the typed-in text to that of the candidate completion.
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" This selects the previous candidate for shift-tab (default)
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"When the <Enter> key is pressed while the popup menu is visible, it only
-"hides the menu. Use this mapping to close the menu and also start a new
-"line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-"let g:loaded_youcompleteme = 1
+" Highlight on yank
+au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000, on_visual=true}
 
 colorscheme afrodite
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
@@ -224,9 +205,8 @@ augroup END
 " Check and update if file has changed outsite vim
 autocmd BufEnter,FocusGained * checktime
 
-"set verbosefile=vimlog.txt
-
-" autocmd Filetype txt setlocal concealcursor=nc conceallevel=2
+" To debug/profile vim uncomment the following line and then :set verbose=15
+" set verbosefile=vimlog.txt
 
 " "========================================================
 " " copy to attached terminal using the yank(1) script:
@@ -251,15 +231,26 @@ autocmd BufEnter,FocusGained * checktime
 " Don't load netrw
 let loaded_netrwPlugin = 1
 
-"" Setting required for /home/jbarik/.config/nvim/pack/packager/start/vim-orgmode/syntax/org.vim
-"" Hyperlinks: {{{1
-"syntax match hyperlink	"\[\{2}[^][]*\(\]\[[^][]*\)\?\]\{2}" contains=hyperlinkBracketsLeft,hyperlinkURL,hyperlinkBracketsRight containedin=org_heading1,org_heading2,org_heading3,org_heading4,org_heading4,org_heading5,org_heading6,org_heading7,org_list_item
+" ===== Start: Experiment with plugins =========================================================
+"if stridx(working_dir, '/mathworks/devel/sbs/') == 0 || stridx(working_dir, '/sandbox/') == 0
+
+let g:use_ycm = 0
+if isdirectory(working_dir . '/.sbtools/sbcpptags/ccls')
+   let g:local_sb = 1
+   let g:loaded_youcompleteme = 1
+else
+   let g:local_sb = 0
+   let g:use_ycm = 1
+   "let g:loaded_youcompleteme = 1
+end
 
 " nvim-lsp setting. The following line will source ./lua/lsp_init.lua
-let g:use_nvim_lsp = 0
+let g:use_nvim_lsp = 1
 if g:use_nvim_lsp == 1
    lua require 'lsp_init'
 end
+" ===== End: Experiment with plugins ===========================================================
+
 
 "https://jeffkreeftmeijer.com/vim-16-color/
 " Normal - Black  0   Bright - Black   8
