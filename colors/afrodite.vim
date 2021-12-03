@@ -9,6 +9,7 @@ endif
 let colors_name = "afrodite"
 
 hi Normal   guifg=#c2c1c2 guibg=#24272e
+hi NormalBG guibg=#24272e
 hi Error    guifg=#ea445d guibg=#24272e gui=underline,italic
 hi ErrorMsg guifg=#ea445d guibg=#24272e
 hi LineNr   guifg=#9696d2 guibg=#272c34
@@ -32,8 +33,10 @@ hi WarningMsg	guifg=#eb3e6b
 hi WildMenu	  guifg=#24272e guibg=#9fd6ff
 hi ModeMsg	  guifg=#22cce2
 hi MoreMsg	  guifg=#eb3e6b
-hi Question	  guifg=#73d216
-hi NonText	  guifg=#0030ff
+"hi Question	  guifg=#73d216
+hi Question	  guifg=#8CEF4F
+"hi NonText	  guifg=#0030ff
+hi NonText	  guifg=#7288E5
 hi VertSplit	guifg=#24272e guibg=#8066ff
 hi StatusLine	guifg=#5b5b5b guibg=#dad3a9
 hi StatusLineNC	guifg=black guibg=darkgray
@@ -106,19 +109,11 @@ hi Delimiter guifg=#00bfff
 hi Operator  guifg=#dede50
 hi Operator  guifg=#c0c06e
 
-hi OrgHeading1 guifg=#e692fc
-hi OrgHeading2 guifg=#64b5f6
-hi OrgHeading3 guifg=#cbcb6f
-hi OrgHeading4 guifg=#90d56e
-hi OrgHeading5 guifg=#F06292
-hi OrgHeading6 guifg=#57d2fb
-hi OrgHeading7 guifg=#87CEEB
-
 hi SneakFirstMatch guifg=#f9f8f9 guibg=#6fc860
 hi SneakSubsequentMatch guifg=#f9f8f9 guibg=#b960c8
 
 hi LspError guifg=#ea445d
-hi LspWarn  guifg=#cbcb6f 
+hi LspWarn  guifg=#cbcb6f
 hi LspHint  guifg=#56b6c2
 
 " See ~/.vim/after/syntax/cpp/c.vim, cpp.vim
