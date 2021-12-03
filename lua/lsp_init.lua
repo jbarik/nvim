@@ -1,19 +1,23 @@
---if vim.g.use_nvim_lsp == 0 then
-local use_nvim_lsp = vim.api.nvim_eval('g:use_nvim_lsp')
-if use_nvim_lsp == 0 then
+if vim.api.nvim_eval('g:use_nvim_lsp') == 0 then
    return
 end
 
-local ccls_dir = vim.g.working_dir .. "/.sbtools/sbcpptags/ccls"
-if vim.fn['isdirectory'](ccls_dir) == 1 then
-   print("Enabling nvim-lsp")
-else
-   return
+local enable_ccls = false;
+local enable_clangd = false;
+if vim.api.nvim_eval('g:local_sb') == 1 then
+   print("Enabling nvim-lsp with ccls")
+   enable_ccls = true;
+elseif vim.api.nvim_eval('g:use_ycm') == 0 then
+   print("Enabling nvim-lsp with clangd")
+   enable_clangd = true;
 end
 
-local lspconfig = require('lspconfig')
-local completion = require('completion')
---local lsp_status = require('lsp-status')
+-- Debugging lsp
+-- Levels by name: "trace", "debug", "info", "warn", "error"
+--                    0       1         2      3       4
+-- see ~/.cache/nvim/lsp.log
+-- vim.lsp.set_log_level('trace')
+-- vim.lsp.set_log_level(1)
 
 local function preview_location_callback(_, method, result)
   if result == nil or vim.tbl_isempty(result) then
@@ -23,6 +27,7 @@ local function preview_location_callback(_, method, result)
   if vim.tbl_islist(result) then
     vim.lsp.util.preview_location(result[1])
   else
+    --print(vim.inspect(result))
     vim.lsp.util.preview_location(result)
   end
 end
@@ -34,102 +39,175 @@ end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- This will disable virtual text, like doing:
     virtual_text = false,
     -- To configure sign display,
     --  see: ":help vim.lsp.diagnostic.set_signs()"
     signs = true,
-
     update_in_insert = false,
 })
 
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+   vim.lsp.handlers.signature_help, {
+      -- Use a sharp border with `FloatBorder` highlights
+      border = "single"
+})
+
 -- ℹ Ⓔ Ⓗ Ⓘ Ⓦ
-vim.fn.sign_define("LspDiagnosticsSignError", {text="✘", texthl="LspError"})
-vim.fn.sign_define("LspDiagnosticsSignWarning", {text="⚠", texthl ="LspWarn"})
-vim.fn.sign_define("LspDiagnosticsSignInformation", {text="ⅈ", texthl ="LspHint"})
-vim.fn.sign_define("LspDiagnosticsSignHint", {text="ℍ", texthl="LspHint"})
+--vim.fn.sign_define("LspDiagnosticsSignError", {text="✘", texthl="LspError"})
+--vim.fn.sign_define("LspDiagnosticsSignWarning", {text="⚠", texthl ="LspWarn"})
+--vim.fn.sign_define("LspDiagnosticsSignInformation", {text="ⅈ", texthl ="LspHint"})
+--vim.fn.sign_define("LspDiagnosticsSignHint", {text="ℍ", texthl="LspHint"})
 
-local on_attach = function(client, bufnr)
-   -- print("Attaching")
-   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-   completion.on_attach(client, bufnr)
-   --lsp_status.on_attach(client, bufnr)
-
+local on_attach_fcn = function(client, bufnr)
+   --print("Attaching lsp")
    -- Show diagnostic when cursor is on the line
-   vim.api.nvim_command('autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics()')
+   --vim.api.nvim_command('autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics()')
+   require "lsp_signature".on_attach({
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      handler_opts = {
+        border = "single"
+      }
+    }, bufnr)
 
    local opts = { noremap=true, silent=true }
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rj', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rJ', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rf', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ra', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rv', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rg', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rd', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rs', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rp', '<cmd>lua peek_definition()<CR>', opts)
+   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[D', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']D', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'do', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 end
 
-local ccls_cmd = '/mathworks/hub/share/sbtools/external-apps/ccls/ccls-20201123-2ad71f1/deb10-64/ccls'
+--local on_ccls_attach = function(client, bufnr)
+--   --vim.api.nvim_command('echo "Attaching ccls to buffer"')
+--   on_attach_fcn(clien, bufnr)
+--end
+
+local get_ccls_root_dir = function()
+   return vim.g.working_dir
+end
+
+--local get_clangd_root_dir = function()
+--end
+
 local cache_dir = vim.g.working_dir .. '/.sbtools/sbcpptags/ccls'
 local comp_dir = vim.g.working_dir .. '/.sbtools/sbcpptags'
 local sync_master_path1 = '/local-ssd/jbarik/.Bmasklib.latest_pass.sbsyncmaster.inprogress/'
 local sync_master_path2 = '/local-ssd/jbarik/.Bmasklib.latest_pass.sbsyncmaster/'
 local master_sb_path = '/local-ssd/jbarik/Bmasklib.latest_pass/'
 local target_path = vim.g.working_dir .. '/'
+local path_mapping1 = sync_master_path1 .. '>' .. target_path
+local path_mapping2 = sync_master_path2 .. '>' .. target_path
+local path_mapping3 = master_sb_path .. '>' .. target_path
 
-local on_ccls_attach = function(client, bufnr)
-   vim.api.nvim_command('echo "Attaching ccls to buffer"')
-   on_attach(clien, bufnr)
+capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lspconfig = require('lspconfig')
+
+cpp_capabilities = capabilities;
+cpp_capabilities.window.workDoneProgress = false;
+cpp_capabilities.textDocument.completion.completionItem.snippetSupport = false;
+cpp_capabilities.textDocument.completion.detailedLabel = false;
+cpp_capabilities.textDocument.completion.placeholder = false;
+
+if enable_ccls then
+   lspconfig.ccls.setup{
+      cmd = {'ccls'},
+      root_dir = get_ccls_root_dir,
+      init_options = {
+         cache = {directory = cache_dir, retainInMemory = 1};
+         compilationDatabaseDirectory = comp_dir;
+         index = {
+            threads = 12,
+            trackDependency = 0
+         },
+         clang = {
+            pathMappings = {path_mapping1, path_mapping2, path_mapping3}
+         },
+         codeLens = {
+            localVariables = false;
+         },
+         diagnostics = {
+            onOpen = 0,
+            onChange = -1,
+            onSave = 0,
+         },
+         foldingRangeProvider = false,
+      },
+      capabilities = cpp_capabilities,
+      on_attach = on_attach_fcn,
+   }
+
+elseif enable_clangd then
+   lspconfig.clangd.setup({
+      cmd = { "clangd"},
+      filetypes = { "c", "cpp", "objc", "objcpp" },
+      --root_dir = root_pattern("compile_commands.json", "compile_flags.txt", ".git") or dirname,
+      single_file_support = true,
+      --init_options = {},
+      capabilities = cpp_capabilities,
+      on_attach = on_attach_fcn,
+   })
 end
 
-lspconfig.ccls.setup{
-   cmd = { ccls_cmd,
-           '--init={"cache":{"directory":"' .. cache_dir .. '"},' ..
-           '"clang":{"pathMappings":["' .. sync_master_path1 .. '>' .. target_path .. '",' ..
-           '"' .. sync_master_path2 .. '>' .. target_path .. '",' ..
-           '"' .. master_sb_path .. '>' .. target_path .. '"]},' ..
-           '"compilationDatabaseDirectory":"' .. comp_dir .. '",' ..
-           '"diagnostics":{"onOpen":0,"onChange":-1,"onSave":0},' ..
-           '"index":{"threads":12,"trackDependency":0}}'
-      };
-   allowlist = {"c", "cpp", "objc", "cc"};
-   on_attach = on_ccls_attach
+lspconfig.pyright.setup{
+   on_attach = on_attach_fcn,
+   capabilities = capabilities
 }
 
-local configs = require'lspconfig/configs'
--- Check if it's already defined for when reloading this file.
-if not lspconfig.matlab then
-   configs.matlab = {
-      default_config = {
-         cmd = {'/home/jbarik/scripts/lsp_matlab'};
-         root_dir = function(fname)
-            return vim.g.working_dir;
-         end;
-         filetypes = {'m', 'matlab'};
-      };
-   }
+local configs = require "lspconfig/configs"
+configs['matlab'] = {
+   default_config = {
+      cmd = {'/home/jbarik/scripts/lsp_matlab'};
+      root_dir = function(fname)
+         return vim.g.working_dir;
+      end;
+      filetypes = {'m', 'matlab'};
+   },
+}
+
+local matlab_installer = function(server, callback, context)
+   print('installer called')
+   callback(true)
 end
 
-local on_matlab_attach = function(client, bufnr)
-   vim.api.nvim_command('echo "Attaching matlabls to buffer"')
-   on_attach(clien, bufnr)
-end
+local servers = require "nvim-lsp-installer.servers"
+local server = require "nvim-lsp-installer.server"
+local matlab_server = server.Server:new {
+    name = 'matlab',
+    default_options = {
+        cmd = {'/home/jbarik/scripts/lsp_matlab'};
+        root_dir = function(fname)
+           return vim.g.working_dir;
+        end;
+        filetypes = {'m', 'matlab'};
+        allowlist = {'matlab'},
+        on_attach = on_attach_fcn,
+        capabilities = capabilities
+    },
+    installer = matlab_installer,
+}
+servers.register(matlab_server)
 
 lspconfig.matlab.setup{
-   allowlist = {'matlab'};
-   on_attach = on_matlab_attach
+   allowlist = {'matlab'},
+   on_attach = on_matlab_attach,
+   capabilities = capabilities
 }
---vim.lsp.set_log_level("debug")
+
 return {
    peek_inside =  peek_definition
 }
+
