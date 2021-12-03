@@ -8,12 +8,13 @@ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 " See all the avaliable executives via `:echo g:vista#executives`.
 let g:vista_default_executive = 'ctags'
 
-" Set the executive for some filetypes explicitly. Use the explicit executive
-" instead of the default one for these filetypes when using `:Vista` without
-" specifying the executive. (for vim-lsp value is vim_lsp, for inbuilt lsp
-" value is nvim_lsp)
+" Set the executive for some filetypes explicitly.
+let s:lsp_client = 'nvim_lsp'
+if g:use_nvim_lsp == 0
+   let s:lsp_client = 'vim_lsp'
+end
 let g:vista_executive_for = {
-  \ 'cpp': 'vim_lsp'
+  \ 'cpp': s:lsp_client
   \ }
 
 " Declare the command including the executable and options used to generate ctags output

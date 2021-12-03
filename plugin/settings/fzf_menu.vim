@@ -6,19 +6,18 @@ let s:text_dict = {
          \'4.  Callstack: Shorten paths'             : '%s/\(#.*at \)\/.*\(\/matlab\/.*\)/\1\2/',
          \'5.  Callstack: Shorten export paths'      : '%s/\(at \)\(\/.*\)\(\/matlab\/.*\)/\1\3/',
          \'6.  Callstack: Remove fcn arguments '     : '%s/\/.*\(\/matlab\/\)\(.*(.*\)/\/\.\*\1\2/g',
-         \'7.  Block name: Replace new line with \n' : '%s/\(BLOCK_NAME: "[^"]* *\)\n/\1\\n/<bar>:%s/\(\n\n\)\n\+/\1/g',
-         \'8.  Block name: Replace new line - old'   : '%s/\(BLOCK_NAME: "[^"]* *\)\n/\1\\n/g',
-         \'9.  Replace character \n with new line'   : '%s/\\n/\r/g',
-         \'10. Remove trailing white space'          : '%s/\s\+$//'
+         \'7.  Block name: Replace new line with \n' : '%s/\(BLOCK_NAME: "[^"]* *\)\n/\1\\n/g',
+         \'8.  Replace character \n with new line'   : '%s/\\n/\r/g',
+         \'9. Remove trailing white space'           : '%s/\s\+$//'
          \}
 
 let s:ccls_dict = {
-         \ '1.  Ccls: Base hierarchy':    'CclsBaseHierarchy',
+         \ '1.  Ccls: Base hierarchy'   : 'CclsBaseHierarchy',
          \ '2.  Ccls: Derived hierarchy': 'CclsDerivedHierarchy',
          \ '3.  Ccls: Callers          ': 'CclsCallers',
-         \ '4.  Ccls: Caller hierarchy':  'CclsCallerHierarchy',
-         \ '5.  Ccls: Callees':           'CclsCalees',
-         \ '6.  Ccls: Callee hierarchy':  'CclsCaleeHierarchy'
+         \ '4.  Ccls: Caller hierarchy' : 'CclsCallerHierarchy',
+         \ '5.  Ccls: Callees'          : 'CclsCallees',
+         \ '6.  Ccls: Callee hierarchy' : 'CclsCalleeHierarchy'
          \}
 
 let s:config_dict = {

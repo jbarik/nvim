@@ -26,6 +26,8 @@ nn <Space>ct :let @*=expand("%:t") <bar> let @+=@*<CR>
 nn <Space>cr :let @*=fnamemodify(expand("%"),":.") <bar> let @+=@*<CR>
 " copy current file's directory name, h for head
 nn <Space>cd :let @*=expand("%:p:h") <bar> let @+=@*<CR>
+" copy file path under cursor
+nn <Space>ccf :let @*=expand('<cfile>') <bar> let @+=@*<CR>
 
 " paste from primary(middle click)
 nm <Space>p "*p
@@ -34,7 +36,8 @@ nm <Space>p "*p
 " Helpful to use it in gdb - for breakpoints
 " See http://vim.wikia.com/wiki/Get_the_name_of_the_current_file
 "nn <Space>cn :let @*='b ' . expand("%:t") . ':' . line(".") <bar> let @+=@*<CR>
-nn <Space>cn :let @*='b ' . expand("%") . ':' . line(".") <bar> let @+=@*<CR>
+"nn <Space>cn :let @*='b ' . expand("%") . ':' . line(".") <bar> let @+=@*<CR>
+nn <Space>cn :let @*='b ' . fnamemodify(expand("%"),":.") . ':' . line(".") <bar> let @+=@*<CR>
 
 " Windows navigation
 nn <Leader>j <C-W>j
