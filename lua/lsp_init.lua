@@ -152,7 +152,7 @@ if enable_ccls then
 
 elseif enable_clangd then
    lspconfig.clangd.setup({
-      cmd = { "clangd"},
+      cmd = { "clangd-13", "-header-insertion-decorators=0", "-limit-results=500"},
       filetypes = { "c", "cpp", "objc", "objcpp" },
       --root_dir = root_pattern("compile_commands.json", "compile_flags.txt", ".git") or dirname,
       single_file_support = true,
@@ -167,39 +167,18 @@ lspconfig.pyright.setup{
    capabilities = capabilities
 }
 
-local configs = require "lspconfig/configs"
-configs['matlab'] = {
-   default_config = {
-      cmd = {'/home/jbarik/scripts/lsp_matlab'};
-      root_dir = function(fname)
-         return vim.g.working_dir;
-      end;
-      filetypes = {'m', 'matlab'};
-   },
-}
-
-local matlab_installer = function(server, callback, context)
-   print('installer called')
-   callback(true)
-end
-
-local servers = require "nvim-lsp-installer.servers"
-local server = require "nvim-lsp-installer.server"
-local matlab_server = server.Server:new {
-    name = 'matlab',
-    default_options = {
+local configs = require "lspconfig.configs"
+if not configs.matlab then
+  configs.matlab = {
+    default_config = {
         cmd = {'/home/jbarik/scripts/lsp_matlab'};
         root_dir = function(fname)
            return vim.g.working_dir;
         end;
-        filetypes = {'m', 'matlab'};
-        allowlist = {'matlab'},
-        on_attach = on_attach_fcn,
-        capabilities = capabilities
+        filetypes = {'matlab'};
     },
-    installer = matlab_installer,
-}
-servers.register(matlab_server)
+  }
+end
 
 lspconfig.matlab.setup{
    allowlist = {'matlab'},
