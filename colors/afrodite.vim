@@ -10,9 +10,18 @@ let colors_name = "afrodite"
 
 hi Normal   guifg=#c2c1c2 guibg=#24272e
 hi NormalBG guibg=#24272e
-hi Error    guifg=#ea445d guibg=#24272e gui=underline,italic
-hi ErrorMsg guifg=#ea445d guibg=#24272e
+hi Error    guifg=#ea445d gui=underline,italic
+hi ErrorMsg guifg=#ea445d
 hi LineNr   guifg=#9696d2 guibg=#272c34
+
+hi DiagnosticError guifg=#ea445d
+hi DiagnosticSignError guifg=#ea445d guibg=#272c34 gui=bold
+hi DiagnosticWarn guifg=#ffb74d
+hi DiagnosticSignWarn guifg=#ffb74d guibg=#272c34 gui=bold
+hi DiagnosticInfo guifg=#81d4fa
+hi DiagnosticSignInfo guifg=#81d4fa guibg=#272c34 gui=bold
+hi DiagnosticHint guifg=#90caf9
+hi DiagnosticSignHint guifg=#90caf9 guibg=#272c34 gui=bold
 
 " filler lines (~) after the last line in the buffer
 hi EndOfBuffer guifg=#272c34 guibg=#272c34
@@ -43,7 +52,7 @@ hi StatusLineNC	guifg=black guibg=darkgray
 
 hi Folded      guifg=#808080 guibg=#333431
 hi FoldColumn  guifg=#808080 guibg=#333431
-hi SignColumn  guifg=#808080 guibg=#272C34
+hi SignColumn  guifg=#808080 guibg=#272c34
 
 hi DiffAdd     guibg=darkblue
 hi DiffChange  guibg=darkmagenta
