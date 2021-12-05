@@ -124,11 +124,11 @@ function! PackagerInit() abort
 
    " Latest YCM uses(clangd) glibcxx version *.26. Our machine doesn't have that
    " strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-   call packager#add('ycm-core/YouCompleteMe', {'commit': '7c4d05375a09a871f618f9688c7af517d4e69b76'})
+   "call packager#add('ycm-core/YouCompleteMe', {'commit': '7c4d05375a09a871f618f9688c7af517d4e69b76'})
+   call packager#add('ycm-core/YouCompleteMe')
    call packager#add('m-pilia/vim-ccls')
    call packager#add('liuchengxu/vista.vim')
    call packager#add('neovim/nvim-lspconfig')
-   call packager#add('williamboman/nvim-lsp-installer')
 
    call packager#add('hrsh7th/nvim-cmp')
    call packager#add('hrsh7th/cmp-nvim-lsp')
@@ -240,8 +240,9 @@ if isdirectory(working_dir . '/.sbtools/sbcpptags/ccls')
    let g:loaded_youcompleteme = 1
 else
    let g:local_sb = 0
-   let g:use_ycm = 1
-   "let g:loaded_youcompleteme = 1
+   "let g:use_ycm = 1
+   let g:use_ycm = 0
+   let g:loaded_youcompleteme = 1
 end
 
 " nvim-lsp setting. The following line will source ./lua/lsp_init.lua
