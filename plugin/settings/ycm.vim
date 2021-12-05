@@ -4,8 +4,9 @@ end
 
 echo "Turning on ycm with clangd"
 let g:ycm_filetype_blacklist = {'python': 1, 'matlab':1}
-let g:ycm_filetype_whitelist = {'cpp': 1, 'c':1, 'txt':1, 'org':1}
+let g:ycm_filetype_whitelist = {'cpp': 1, 'c':1}
 let g:ycm_use_clangd = 1
+let g:ycm_clangd_binary_path = '/usr/bin/clangd-13'
 let g:ycm_use_ultisnips_completer = 0
 let g:ycm_confirm_extra_conf = 1
 let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf_mw.py'
@@ -33,7 +34,7 @@ autocmd FileType cpp,c nmap <silent> <Space>rv :YcmCompleter GoToImplementation<
 autocmd FileType cpp,c nmap <silent> <Space>rd :YcmDiags<CR>
 autocmd FileType cpp,c nmap <silent> <Space>rn :YcmCompleter RefactorRename<CR>
 autocmd FileType cpp,c nmap <silent> <Space>rx :YcmCompleter FixIt<CR>
-autocmd FileType cpp,c nmap K :YcmGetDocFloatWin<cr>
+autocmd FileType cpp,c nmap <silent> K :YcmGetDocFloatWin<cr>
 "noremap <silent> <Leader>ri :YcmCompleter GetDoc<CR>
 
 function s:Hover()
@@ -49,11 +50,7 @@ command YcmGetDocFloatWin :call <SID>Hover()
 " let g:ycm_server_use_vim_stdout = 0
 
 " "Ycm debuging settings
-" let g:ycm_log_level = 'debug'
-" let g:ycm_server_log_level = 'debug'
-" let g:ycm_server_use_vim_stdout = 1
-" let g:ycm_server_keep_logfiles = 1
-"
-" let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1, 'python' : 1, 'text' : 1}
-" let g:ycm_filetype_blacklist = {'tagbar': 1}
-"
+let g:ycm_log_level = 'debug'
+let g:ycm_server_log_level = 'debug'
+let g:ycm_server_use_vim_stdout = 1
+let g:ycm_server_keep_logfiles = 1
