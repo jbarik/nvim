@@ -10,9 +10,6 @@ let g:vista_default_executive = 'ctags'
 
 " Set the executive for some filetypes explicitly.
 let s:lsp_client = 'nvim_lsp'
-if g:use_nvim_lsp == 0
-   let s:lsp_client = 'vim_lsp'
-end
 let g:vista_executive_for = {
   \ 'cpp': s:lsp_client
   \ }

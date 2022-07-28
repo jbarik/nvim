@@ -6,6 +6,10 @@ nm <Space>fq :qa!<CR>
 nm <Leader>en :e ~/.config/nvim/init.vim<CR>
 nm <Leader>ek :e ~/.config/nvim/plugin/settings/generic_keymap.vim<CR>
 nm <Leader>eg :e ~/.gdbinit<CR>
+nm <Leader>es :e /mathworks/devel/sandbox/
+nm <Leader>ei :e /mathworks/devel/sandbox/jbarik/issues/
+nm <Leader>ep :e /mathworks/devel/sandbox/jbarik/local_storage/project
+nm <Leader>et :e matlab/test/toolbox/simulink/subsystemreference/
 
 nm <Space>v <C-V>
 nm <Space>n :nohls<CR>

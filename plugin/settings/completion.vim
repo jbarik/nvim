@@ -25,10 +25,6 @@ set wildmenu
 " https://github.com/mjlbach/defaults.nvim/blob/master/init.lua#L284
 lua <<EOF
 
-   local lsp_source = 'nvim_lsp'
-   if vim.api.nvim_eval('g:use_nvim_lsp') == 0 then
-      lsp_source = 'vim_lsp'
-   end
    local cmp = require('cmp')
    cmp.setup({
        mapping = {
@@ -61,11 +57,20 @@ lua <<EOF
        },
 
        sources = {
-          { name = lsp_source },
+          { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
           { name = 'buffer' },
-          { name = 'path' },
+          { name = 'path',
+            option = {
+               trailing_slash = false,
+               get_cwd = function()
+                  return vim.fn.getcwd()
+               end,
+            }
+          },
           { name = 'calc' },
           { name = 'orgmode' },
+          { name = 'neorg' },
           { name = 'nvim-lua' },
        },
 
@@ -87,7 +92,3 @@ lua <<EOF
 EOF
 
 "autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }
-if g:use_ycm
-   autocmd FileType cpp,objcpp,c,objc lua require('cmp').setup.buffer {enabled = false}
-end
-

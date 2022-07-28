@@ -2,18 +2,20 @@
 autocmd FileType org setlocal conceallevel=2 | setlocal concealcursor=nc
 
 lua << EOF
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.org = {
-  install_info = {
-    url = 'https://github.com/milisims/tree-sitter-org',
-    revision = 'main',
-    files = {'src/parser.c', 'src/scanner.cc'},
-  },
-  filetype = 'org',
-}
+
+--local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+--parser_config.org = {
+--  install_info = {
+--    url = 'https://github.com/milisims/tree-sitter-org',
+--    revision = 'main',
+--    files = {'src/parser.c', 'src/scanner.cc'},
+--  },
+--  filetype = 'org',
+--}
+
+require('orgmode').setup_ts_grammar()
 
 require'nvim-treesitter.configs'.setup {
-  -- If TS highlights are not enabled at all, or disabled via `disable` prop, highlighting will fallback to default Vim syntax highlighting
   highlight = {
     enable = true,
     -- disable = {'org'}, -- Remove this to use TS highlighter for some of the highlights (Experimental)
@@ -35,48 +37,109 @@ require('orgmode').setup({
   }
 })
 
-require("org-bullets").setup({
-  symbols = {"⦿", "○", "❉","‣","⦾", "•", "✹", "✫"}
+require('org-bullets').setup({
+  --symbols = {"⦿", "○", "❉","‣","✿","⦾", "•", "✹", "✫"},
   --symbols = {"➊", "➋", "➌","➍","➎","➏", "➐", "➑"}
+  --concealcursor = false, -- If false then when the cursor is on a line underlying characters are visible
+  symbols = {
+    headlines = {"◉", "⦿", "○", "❉","‣","✿","⦾", "•", "✹", "✫" },
+    checkboxes = {
+      cancelled = { "", "OrgCancelled" },
+      done = { "✓", "OrgDone" },
+      todo = { "˟", "OrgTODO" },
+    },
+  },
 })
+
 
 --vim.cmd [[highlight Headline1]]
 --vim.fn.sign_define("Headline1", { linehl = "Headline1" })
 vim.fn.sign_define("SubHeadline", { linehl = "NormalBG" })
 
-require("headlines").setup {
+require('headlines').setup {
   org = {
       source_pattern_start = "#%+[bB][eE][gG][iI][nN]_[sS][rR][cC]",
       source_pattern_end = "#%+[eE][nN][dD]_[sS][rR][cC]",
       dash_pattern = "^-----+$",
       headline_pattern = "^%*+",
       headline_signs = { "Headline", "SubHeadline" },
-      -- codeblock_sign = "CodeBlock",
+      --headline_highlights = { "Headline" },
+      codeblock_highlight = "CodeBlock",
       dash_highlight = "Dash",
+      fat_headlines = false,
   },
+
+  --markdown = {
+  --   query = vim.treesitter.parse_query(
+  --   "markdown",
+  --   [[
+  --   (atx_heading [
+  --      (atx_h1_marker)
+  --      (atx_h2_marker)
+  --      (atx_h3_marker)
+  --      (atx_h4_marker)
+  --      (atx_h5_marker)
+  --      (atx_h6_marker)
+  --      ] @headline)
+
+  --   (thematic_break) @dash
+
+  --   (fenced_code_block) @codeblock
+  --   ]]
+  --),
+  --headline_highlights = { "Headline" },
+  --codeblock_highlight = "CodeBlock",
+  --dash_highlight = "Dash",
+  --dash_string = "-",
+  --fat_headlines = true,
+  --},
+
+  --org = {
+  --   query = vim.treesitter.parse_query( "org",
+  --                                      [[
+  --                                      (headline (stars) @headline)
+
+  --                                      (
+  --                                      (expr) @dash
+  --                                      (#match? @dash "^---+$")
+  --                                      )
+
+  --                                      (block
+  --                                      name: (expr) @_name
+  --                                      (#eq? @_name "SRC")
+  --                                      ) @codeblock
+  --                                      ]]),
+  --headline_highlights = { "Headline", "SubHeadline" },
+  --codeblock_highlight = "CodeBlock",
+  --dash_highlight = "Dash",
+  --dash_string = "-",
+  --fat_headlines = true,
+  --},
+
 }
 
---vim.cmd [[highlight OrgHeading1 guifg=#e692fc]]
---vim.cmd [[highlight OrgHeading2 guifg=#64b5f6]]
---vim.cmd [[highlight OrgHeading3 guifg=#cbcb6f]]
---vim.cmd [[highlight OrgHeading4 guifg=#90d56e]]
---vim.cmd [[highlight OrgHeading5 guifg=#F06292]]
---vim.cmd [[highlight OrgHeading6 guifg=#57d2fb]]
---vim.cmd [[highlight OrgHeading7 guifg=#87CEEB]]
---vim.fn.sign_define("OrgHeading1", { linehl = "OrgHeading1" })
---vim.fn.sign_define("OrgHeading2", { linehl = "OrgHeading2" })
---vim.fn.sign_define("OrgHeading3", { linehl = "OrgHeading3" })
---vim.fn.sign_define("OrgHeading4", { linehl = "OrgHeading4" })
---vim.fn.sign_define("OrgHeading5", { linehl = "OrgHeading5" })
---vim.fn.sign_define("OrgHeading6", { linehl = "OrgHeading6" })
---vim.fn.sign_define("OrgHeading7", { linehl = "OrgHeading7" })
---require("headlines").setup {
---    org = {
---        headline_signs = {"OrgHeading1","OrgHeading2","OrgHeading3","OrgHeading4","OrgHeading5","OrgHeading6","OrgHeading7"},
---    },
---}
-
 EOF
+
+"--vim.cmd [[highlight OrgHeading1 guifg=#e692fc]]
+"--vim.cmd [[highlight OrgHeading2 guifg=#64b5f6]]
+"--vim.cmd [[highlight OrgHeading3 guifg=#cbcb6f]]
+"--vim.cmd [[highlight OrgHeading4 guifg=#90d56e]]
+"--vim.cmd [[highlight OrgHeading5 guifg=#F06292]]
+"--vim.cmd [[highlight OrgHeading6 guifg=#57d2fb]]
+"--vim.cmd [[highlight OrgHeading7 guifg=#87CEEB]]
+"--vim.fn.sign_define("OrgHeading1", { linehl = "OrgHeading1" })
+"--vim.fn.sign_define("OrgHeading2", { linehl = "OrgHeading2" })
+"--vim.fn.sign_define("OrgHeading3", { linehl = "OrgHeading3" })
+"--vim.fn.sign_define("OrgHeading4", { linehl = "OrgHeading4" })
+"--vim.fn.sign_define("OrgHeading5", { linehl = "OrgHeading5" })
+"--vim.fn.sign_define("OrgHeading6", { linehl = "OrgHeading6" })
+"--vim.fn.sign_define("OrgHeading7", { linehl = "OrgHeading7" })
+"--require("headlines").setup {
+"--    org = {
+"--        headline_signs = {"OrgHeading1","OrgHeading2","OrgHeading3","OrgHeading4","OrgHeading5","OrgHeading6","OrgHeading7"},
+"--    },
+"--}
+
 
 " Hiding hyperlink (conceal feature) has got some issues Go to org.vim file in syntax/after folder in the plugins code
 " You'll see the folloing code

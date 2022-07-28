@@ -9,4 +9,4 @@ au BufReadCmd *.jar,*.xpi,*.docx,*.slx call zip#Browse(expand("<amatch>"))
 " :echo glob($VIMRUNTIME . '/ftplugin/*.vim')
 " :echo glob($VIMRUNTIME . '/syntax/*.vim')
 autocmd BufRead,BufNewFile *.m set filetype=matlab
-
+"au BufRead * if getline(1) =~ '^#\s.*' | setlocal ft=javascript.flow | endif
