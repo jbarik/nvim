@@ -100,10 +100,13 @@ function! PackagerInit() abort
    call packager#add('fholgado/minibufexpl.vim')
 
    call packager#add('nvim-treesitter/nvim-treesitter')
-   call packager#add('lukas-reineke/headlines.nvim')
+   call packager#add('lukas-reineke/headlines.nvim', {'commit': '347ef0371451d9bfbf010c6743fb74997b5b9a80'})
    call packager#add('kristijanhusak/orgmode.nvim')
    call packager#add('akinsho/org-bullets.nvim')
    call packager#add('jubnzv/mdeval.nvim')
+
+   call packager#add('nvim-neorg/neorg')
+   call packager#add('nvim-lua/plenary.nvim')
 
    call packager#add('nvim-lualine/lualine.nvim')
    call packager#add('kyazdani42/nvim-web-devicons')
@@ -114,18 +117,6 @@ function! PackagerInit() abort
    call packager#add('sheerun/vim-polyglot')
    call packager#add('bfrg/vim-cpp-modern')
 
-   " LSP setup. The following pages can help
-   " https://github.com/aktau/dotfiles/blob/master/.vimrc
-   "  - www.reddit.com/r/neovim/comments/gxcbui/in_built_lsp_is_amazing/
-   "  - www.reddit.com/r/neovim/comments/h0ndj0/to_those_who_have_integrated_lsp_functionality
-   "  - www.reddit.com/r/neovim/comments/gy8ko7/question_how_to_get_more_readable_error_messages
-   "  - www.reddit.com/r/neovim/comments/hba6yb/coc_neovim_lua_completion_source
-   call packager#add('prabirshrestha/vim-lsp')
-
-   " Latest YCM uses(clangd) glibcxx version *.26. Our machine doesn't have that
-   " strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-   "call packager#add('ycm-core/YouCompleteMe', {'commit': '7c4d05375a09a871f618f9688c7af517d4e69b76'})
-   call packager#add('ycm-core/YouCompleteMe')
    call packager#add('m-pilia/vim-ccls')
    call packager#add('liuchengxu/vista.vim')
    call packager#add('neovim/nvim-lspconfig')
@@ -136,18 +127,16 @@ function! PackagerInit() abort
    call packager#add('hrsh7th/cmp-path')
    call packager#add('hrsh7th/cmp-nvim-lua')
    call packager#add('hrsh7th/cmp-calc')
-   call packager#add('dmitmel/cmp-vim-lsp')
-   call packager#add('ray-x/lsp_signature.nvim')
+   "call packager#add('dmitmel/cmp-vim-lsp')
+   "call packager#add('ray-x/lsp_signature.nvim')
+   call packager#add('hrsh7th/cmp-nvim-lsp-signature-help')
 
-   "call packager#add('glepnir/lspsaga.nvim')
-   "call packager#add('nvim-lua/diagnostic-nvim')
-   "call packager#add('nvim-treesitter/nvim-treesitter')
    "call packager#add('nvim-treesitter/completion-treesitter')
    "call packager#add('nvim-lua/lsp-status.nvim')
 
-   call packager#add('junegunn/fzf', {'do': './install --all && ln -s $(pwd) ~/.fzf'})
+   call packager#add('junegunn/fzf', {'do': './install --all && ln -sf $(pwd) ~/.fzf'})
    call packager#add('junegunn/fzf.vim')
-   call packager#add('gfanto/fzf-lsp.nvim')
+   "call packager#add('gfanto/fzf-lsp.nvim')
 
    "call packager#add('nvim-lua/popup.nvim')
    "call packager#add('nvim-lua/plenary.nvim')
@@ -168,6 +157,29 @@ command! PackagerStatus call PackagerInit() | call packager#status()
 
 " Highlight on yank
 au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=1000, on_visual=true}
+
+" Check and update if file has changed outsite vim
+autocmd BufEnter,FocusGained * checktime
+
+augroup custom_term
+   autocmd!
+   autocmd TermOpen * setlocal bufhidden=hide
+augroup END
+
+" To debug/profile vim uncomment the following line and then :set verbose=15
+"set verbosefile=vimlog.txt
+
+" Don't load netrw
+let loaded_netrwPlugin = 1
+
+if isdirectory(working_dir . '/.sbtools/sbcpptags/ccls')
+   let g:local_sb = 1
+else
+   let g:local_sb = 0
+end
+
+" nvim-lsp setting. The following line will source ./lua/lsp_init.lua
+lua require 'lsp_init'
 
 colorscheme afrodite
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
@@ -194,64 +206,12 @@ set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
 "  6 fixed pipe bar
 " Foreground color setting for cursor doesn't work see:
 " https://github.com/neovim/neovim/issues/6591
-set guicursor=n-v-c:block-blinkon100-Cursor
-set guicursor+=i:ver100-blinkon100-iCursor
-
-augroup custom_term
-   autocmd!
-   autocmd TermOpen * setlocal bufhidden=hide
-augroup END
-
-" Check and update if file has changed outsite vim
-autocmd BufEnter,FocusGained * checktime
-
-" To debug/profile vim uncomment the following line and then :set verbose=15
-" set verbosefile=vimlog.txt
-
-" "========================================================
-" " copy to attached terminal using the yank(1) script:
-" " https://github.com/sunaku/home/blob/master/bin/yank
-" function! Yank(text) abort
-"   let escape = system('yank', a:text)
-"   if v:shell_error
-"     echoerr escape
-"   else
-"     call writefile([escape], '/dev/tty', 'b')
-"   endif
-" endfunction
-"
-" " automatically run yank(1) whenever yanking in Vim
-" " (this snippet was contributed by Larry Sanderson)
-" function! CopyYank() abort
-"   call Yank(join(v:event.regcontents, "\n"))
-" endfunction
-" autocmd TextYankPost * call CopyYank()
-" "========================================================
-
-" Don't load netrw
-let loaded_netrwPlugin = 1
-
-" ===== Start: Experiment with plugins =========================================================
-"if stridx(working_dir, '/mathworks/devel/sbs/') == 0 || stridx(working_dir, '/sandbox/') == 0
-
-let g:use_ycm = 0
-if isdirectory(working_dir . '/.sbtools/sbcpptags/ccls')
-   let g:local_sb = 1
-   let g:loaded_youcompleteme = 1
-else
-   let g:local_sb = 0
-   "let g:use_ycm = 1
-   let g:use_ycm = 0
-   let g:loaded_youcompleteme = 1
-end
-
-" nvim-lsp setting. The following line will source ./lua/lsp_init.lua
-let g:use_nvim_lsp = 1
-if g:use_nvim_lsp == 1
-   lua require 'lsp_init'
-end
-" ===== End: Experiment with plugins ===========================================================
-
+"set guicursor=n-v-c:block-blinkon100-Cursor
+set guicursor=n-v-c:block-Cursor-blinkon100
+set guicursor+=i:ver100-iCursor-blinkon100
+" set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+" 		          \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+" 		          \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 "https://jeffkreeftmeijer.com/vim-16-color/
 " Normal - Black  0   Bright - Black   8
