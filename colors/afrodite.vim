@@ -10,8 +10,8 @@ let colors_name = "afrodite"
 
 hi Normal   guifg=#c2c1c2 guibg=#24272e
 hi NormalBG guibg=#24272e
-hi Error    guifg=#ea445d gui=underline,italic
-hi ErrorMsg guifg=#ea445d
+hi Error    guifg=#ea445d guibg=#24272e gui=underline,italic
+hi ErrorMsg guifg=#ea445d guibg=#24272e
 hi LineNr   guifg=#9696d2 guibg=#272c34
 
 hi DiagnosticError guifg=#ea445d
@@ -47,6 +47,7 @@ hi Question	  guifg=#8CEF4F
 "hi NonText	  guifg=#0030ff
 hi NonText	  guifg=#7288E5
 hi VertSplit	guifg=#24272e guibg=#8066ff
+hi VertSplit	guifg=#8066ff guibg=#24272e
 hi StatusLine	guifg=#5b5b5b guibg=#dad3a9
 hi StatusLineNC	guifg=black guibg=darkgray
 
