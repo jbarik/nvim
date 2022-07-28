@@ -1,15 +1,13 @@
-if vim.api.nvim_eval('g:use_nvim_lsp') == 0 then
-   return
-end
-
 local enable_ccls = false;
 local enable_clangd = false;
+local clangd_path = '';
 if vim.api.nvim_eval('g:local_sb') == 1 then
    print("Enabling nvim-lsp with ccls")
    enable_ccls = true;
-elseif vim.api.nvim_eval('g:use_ycm') == 0 then
+else
    print("Enabling nvim-lsp with clangd")
    enable_clangd = true;
+   clangd_path = "clangd-14";
 end
 
 -- Debugging lsp
@@ -47,11 +45,11 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 })
 
 
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-   vim.lsp.handlers.signature_help, {
-      -- Use a sharp border with `FloatBorder` highlights
-      border = "single"
-})
+-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+--    vim.lsp.handlers.signature_help, {
+--       -- Use a sharp border with `FloatBorder` highlights
+--       border = "single"
+-- })
 
 -- ℹ Ⓔ Ⓗ Ⓘ Ⓦ
 --vim.fn.sign_define("LspDiagnosticsSignError", {text="✘", texthl="LspError"})
@@ -63,12 +61,12 @@ local on_attach_fcn = function(client, bufnr)
    --print("Attaching lsp")
    -- Show diagnostic when cursor is on the line
    --vim.api.nvim_command('autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics()')
-   require "lsp_signature".on_attach({
-      bind = true, -- This is mandatory, otherwise border config won't get registered.
-      handler_opts = {
-        border = "single"
-      }
-    }, bufnr)
+   -- require "lsp_signature".on_attach({
+   --    bind = true, -- This is mandatory, otherwise border config won't get registered.
+   --    handler_opts = {
+   --      border = "single"
+   --    }
+   --  }, bufnr)
 
    local opts = { noremap=true, silent=true }
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rj', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -77,7 +75,7 @@ local on_attach_fcn = function(client, bufnr)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ra', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rv', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rg', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rd', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rd', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rs', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rp', '<cmd>lua peek_definition()<CR>', opts)
@@ -152,7 +150,7 @@ if enable_ccls then
 
 elseif enable_clangd then
    lspconfig.clangd.setup({
-      cmd = { "clangd-13", "-header-insertion-decorators=0", "-limit-results=500"},
+      cmd = { clangd_path, "-header-insertion-decorators=0", "-limit-results=500"},
       filetypes = { "c", "cpp", "objc", "objcpp" },
       --root_dir = root_pattern("compile_commands.json", "compile_flags.txt", ".git") or dirname,
       single_file_support = true,
@@ -171,7 +169,8 @@ local configs = require "lspconfig.configs"
 if not configs.matlab then
   configs.matlab = {
     default_config = {
-        cmd = {'/home/jbarik/scripts/lsp_matlab'};
+        -- cmd = {'~jbarik/scripts/lsp_matlab'};
+        cmd = {'/mathworks/inside/labs/dev/matlab_coder_tools/matlabls/matlabls/editors/vim/lsp_matlab'};
         root_dir = function(fname)
            return vim.g.working_dir;
         end;
@@ -182,7 +181,7 @@ end
 
 lspconfig.matlab.setup{
    allowlist = {'matlab'},
-   on_attach = on_matlab_attach,
+   on_attach = on_attach_fcn,
    capabilities = capabilities
 }
 
